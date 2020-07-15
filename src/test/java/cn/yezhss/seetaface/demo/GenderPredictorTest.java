@@ -4,9 +4,7 @@ import cn.yezhss.seetaface.api.FaceDetector;
 import cn.yezhss.seetaface.api.FaceLandmarker;
 import cn.yezhss.seetaface.api.GenderPredictor;
 import cn.yezhss.seetaface.api.GenderPredictor.Gender;
-import cn.yezhss.seetaface.api.MaskDetector;
 import cn.yezhss.seetaface.demo.base.SeetafaceTest;
-import cn.yezhss.seetaface.po.MaskStatus;
 import cn.yezhss.seetaface.po.PointWithMask;
 import cn.yezhss.seetaface.po.SeetaFaceInfo;
 import cn.yezhss.seetaface.po.SeetaFaceInfoArray;
@@ -16,7 +14,12 @@ import cn.yezhss.seetaface.po.SeetaRect;
 import cn.yezhss.seetaface.util.SeetafaceUtil;
 
 /**
- * 
+ * 性别判断
+ * <pre>
+ * 如果觉得不错的话
+ * 关注公众号: 时匆
+ * 给个小小的支持
+ * </pre>
  * @author Onion_Ye
  * @time 2020年7月2日 上午11:20:48
  */

@@ -11,7 +11,12 @@ import cn.yezhss.seetaface.po.SeetaRect;
 import cn.yezhss.seetaface.util.SeetafaceUtil;
 
 /**
- * 
+ * 口罩检测
+ * <pre>
+ * 如果觉得不错的话
+ * 关注公众号: 时匆
+ * 给个小小的支持
+ * </pre>
  * @author Onion_Ye
  * @time 2020年6月28日 下午5:27:00
  */

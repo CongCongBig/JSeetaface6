@@ -13,9 +13,9 @@ import cn.yezhss.seetaface.util.SeetafaceUtil;
 /**
  * 人脸检测DEMO
  * <pre>
+ * 如果觉得不错的话
  * 关注公众号: 时匆
- * 回复关键字: JSeetaface6
- * 获取加群二维码
+ * 给个小小的支持
  * </pre>
  * @author Onion_Ye
  * @time 2020年6月23日 下午4:12:56
