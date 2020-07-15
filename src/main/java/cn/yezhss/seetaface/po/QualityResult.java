@@ -2,7 +2,7 @@ package cn.yezhss.seetaface.po;
 
 /**
  * 质量评估结果集
- * @author YeZhiCong
+ * @author Onion_Ye
  * @time 2020年7月6日 上午11:33:17
  */
 public class QualityResult {

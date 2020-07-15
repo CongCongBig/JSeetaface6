@@ -10,7 +10,7 @@ import cn.yezhss.seetaface.po.SeetaRect;
 
 /**
  * 深度学习的人脸姿态评估器。
- * @author YeZhiCong
+ * @author Onion_Ye
  * @time 2020年7月9日 上午11:11:16
  */
 public class QualityOfPoseEx {
@@ -20,7 +20,7 @@ public class QualityOfPoseEx {
 	/**
 	 * 人脸姿态评估器构造函数。
 	 * @param cstaPath pose_estimation.csta的路径
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年7月10日 上午11:49:47
 	 */
 	public QualityOfPoseEx(String cstaPath) {
@@ -29,7 +29,7 @@ public class QualityOfPoseEx {
 	
 	/**
 	 * 人脸姿态评估器构造函数。
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年7月10日 上午11:48:57
 	 */
 	public QualityOfPoseEx(SeetaModelSetting setting) {
@@ -43,7 +43,7 @@ public class QualityOfPoseEx {
 	 * @param face 人脸位置
 	 * @param points 人脸5个特征点数组
 	 * @return 人脸姿态检测结果
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年7月9日 上午11:13:12
 	 */
 	public QualityResult check(SeetaImageData image, SeetaRect face, SeetaPointF[] points) {
@@ -55,7 +55,7 @@ public class QualityOfPoseEx {
 	 * @param nativeId QualityOfPoseEx在c++的序列化
 	 * @param property 属性 参考 QualityOfPose.Property.getValue()
 	 * @param value 值
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年7月9日 上午11:14:28
 	 */
 	public void set(Property property, double value) {
@@ -67,7 +67,7 @@ public class QualityOfPoseEx {
 	 * @param nativeId QualityOfPoseEx在c++的序列化
 	 * @param property 属性 参考 QualityOfPose.Property.getValue()
 	 * @return 值
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年7月9日 上午11:16:27
 	 */
 	public double get(long nativeId, Property property) {

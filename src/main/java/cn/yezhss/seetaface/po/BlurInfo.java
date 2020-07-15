@@ -2,7 +2,7 @@ package cn.yezhss.seetaface.po;
 
 /**
  * 模糊信息
- * @author YeZhiCong
+ * @author Onion_Ye
  * @time 2020年7月9日 上午9:53:39
  */
 public class BlurInfo {

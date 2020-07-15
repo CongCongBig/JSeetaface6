@@ -17,7 +17,7 @@ import cn.yezhss.seetaface.util.SeetafaceUtil;
  * 回复关键字: JSeetaface6
  * 获取加群二维码
  * </pre>
- * @author YeZhiCong
+ * @author Onion_Ye
  * @time 2020年6月24日 上午11:56:03
  */
 public class FaceLandmarkerTest extends SeetafaceTest {
@@ -25,7 +25,7 @@ public class FaceLandmarkerTest extends SeetafaceTest {
 	/**
 	 * 主要展示FaceLandmarker的mark方法, 该方法中需要传入已经识别的人脸区域, 该信息可通过FaceDetector获取
 	 * @param args
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年6月24日 下午12:03:16
 	 */
 	public static void main(String[] args) {

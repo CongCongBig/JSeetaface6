@@ -12,7 +12,7 @@ import cn.yezhss.seetaface.util.SeetafaceUtil;
 
 /**
  * 
- * @author YeZhiCong
+ * @author Onion_Ye
  * @time 2020年6月28日 下午5:27:00
  */
 public class MaskDetectorTest extends SeetafaceTest  {

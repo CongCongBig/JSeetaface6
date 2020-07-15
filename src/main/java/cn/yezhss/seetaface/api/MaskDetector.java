@@ -8,7 +8,7 @@ import cn.yezhss.seetaface.po.SeetaRect;
 
 /**
  * 口罩检测器
- * @author YeZhiCong
+ * @author Onion_Ye
  * @time 2020年6月24日 下午5:11:58
  */
 public class MaskDetector {
@@ -18,7 +18,7 @@ public class MaskDetector {
 	/**
 	 * 口罩检测器
 	 * @param cstaPath mask_detector.csta的路径
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年6月24日 下午5:14:39
 	 */
 	public MaskDetector(String cstaPath) {
@@ -27,7 +27,7 @@ public class MaskDetector {
 
 	/**
 	 * 口罩检测器
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年6月24日 下午5:13:27
 	 */
 	public MaskDetector(SeetaModelSetting seetaModelSetting) {
@@ -40,7 +40,7 @@ public class MaskDetector {
 	 * @param face 人脸位置
 	 * @param score 戴口罩的置信度
 	 * @return false没戴口罩/true戴了口罩
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年6月24日 下午5:07:49
 	 */
 	public MaskStatus detect(SeetaImageData image, SeetaRect face) {

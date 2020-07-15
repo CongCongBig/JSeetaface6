@@ -15,7 +15,7 @@ import cn.yezhss.seetaface.util.SeetafaceUtil;
 
 /**
  * 
- * @author YeZhiCong
+ * @author Onion_Ye
  * @time 2020年7月2日 上午11:56:35
  */
 public class EyeStateDetectorTest extends SeetafaceTest {

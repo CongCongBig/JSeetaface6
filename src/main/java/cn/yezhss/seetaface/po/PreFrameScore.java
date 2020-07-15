@@ -2,7 +2,7 @@ package cn.yezhss.seetaface.po;
 
 /**
  * 
- * @author YeZhiCong
+ * @author Onion_Ye
  * @time 2020年6月24日 下午6:06:16
  */
 public class PreFrameScore {

@@ -7,7 +7,7 @@ import cn.yezhss.seetaface.po.SeetaRect;
 
 /**
  * 人脸特征点检测器
- * @author YeZhiCong
+ * @author Onion_Ye
  * @time 2020年6月22日 下午1:26:16
  */
 public class FaceLandmarkerNative {
@@ -16,7 +16,7 @@ public class FaceLandmarkerNative {
 	 * 人脸特征点检测器
 	 * @param setting 检测器结构参数
 	 * @return FaceLandmarker在c++的持久化Id
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年6月22日 下午1:27:01
 	 */
 	public static native long init(SeetaModelSetting setting);
@@ -25,7 +25,7 @@ public class FaceLandmarkerNative {
 	 * 获取模型对应的特征点数组长度
 	 * @param nativeId 持久化id
 	 * @return 模型特征点数组长度
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年6月22日 下午1:28:26
 	 */
 	public static native int number(long nativeId);
@@ -36,7 +36,7 @@ public class FaceLandmarkerNative {
 	 * @param image 图像原始数据
 	 * @param face 人脸位置
 	 * @return 人脸特征点数组
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年6月22日 下午1:31:11
 	 */
 	public static native PointWithMask[] mark(long nativeId, SeetaImageData image, SeetaRect face);

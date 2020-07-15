@@ -17,7 +17,7 @@ import cn.yezhss.seetaface.util.SeetafaceUtil;
 
 /**
  * 
- * @author YeZhiCong
+ * @author Onion_Ye
  * @time 2020年7月2日 上午11:20:48
  */
 public class GenderPredictorTest extends SeetafaceTest {

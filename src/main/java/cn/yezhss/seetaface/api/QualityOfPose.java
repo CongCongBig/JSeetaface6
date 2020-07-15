@@ -8,7 +8,7 @@ import cn.yezhss.seetaface.po.SeetaRect;
 
 /**
  * 非深度学习的人脸姿态评估器
- * @author YeZhiCong
+ * @author Onion_Ye
  * @time 2020年7月9日 上午10:23:41
  */
 public class QualityOfPose {
@@ -17,7 +17,7 @@ public class QualityOfPose {
 
 	/**
 	 * 非深度学习的人脸姿态评估器
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年7月10日 下午2:12:03
 	 */
 	public QualityOfPose() {
@@ -30,7 +30,7 @@ public class QualityOfPose {
 	 * @param face 人脸位置
 	 * @param points 人脸5个特征数组
 	 * @return 人脸姿态检测结果
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年7月9日 上午11:07:02
 	 */
 	public QualityResult check(SeetaImageData image, SeetaRect face, SeetaPointF[] points) {

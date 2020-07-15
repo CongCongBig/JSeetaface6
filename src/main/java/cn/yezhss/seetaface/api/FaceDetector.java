@@ -7,7 +7,7 @@ import cn.yezhss.seetaface.cxx.FaceDetectorNative;
 
 /**
  * 人脸检测器
- * @author YeZhiCong
+ * @author Onion_Ye
  * @time 2020年6月22日 下午12:02:01
  */
 public class FaceDetector {
@@ -17,7 +17,7 @@ public class FaceDetector {
 	/**
 	 * 人脸检测器
 	 * @param cstaPath face_detector.csta模型路径 
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年6月22日 下午1:22:29
 	 */
 	public FaceDetector(String cstaPath) {
@@ -27,7 +27,7 @@ public class FaceDetector {
 	/**
 	 * 人脸检测器
 	 * @param setting 检测器结构参数
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年6月22日 下午1:22:22
 	 */
 	public FaceDetector(SeetaModelSetting setting) {
@@ -38,7 +38,7 @@ public class FaceDetector {
 	 * 输入彩色图像，检测其中的人脸。
 	 * @param image 输入的图像数据
 	 * @return 人脸信息数组
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年6月22日 下午1:19:32
 	 */
 	public SeetaFaceInfoArray detect(SeetaImageData image) {
@@ -49,7 +49,7 @@ public class FaceDetector {
 	 * 设置人脸检测器相关属性值 property来自{@linkplain Property}
 	 * @param property 属性类型 
 	 * @param value 设置的属性值
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年6月22日 下午1:07:14
 	 */
 	public void set(Property property, double value) {
@@ -60,7 +60,7 @@ public class FaceDetector {
 	 * 获取人脸检测器相关属性值 property来自{@linkplain Property}
 	 * @param property 属性类型 
 	 * @return 设置的属性值
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年6月22日 下午1:10:52
 	 */
 	public double get(Property property) {
@@ -69,7 +69,7 @@ public class FaceDetector {
 	
 	/**
 	 * 可供修改的属性
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年6月22日 下午12:51:43
 	 */
 	public enum Property {

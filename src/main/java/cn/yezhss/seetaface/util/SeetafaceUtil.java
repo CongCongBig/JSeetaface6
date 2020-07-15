@@ -23,7 +23,7 @@ import cn.yezhss.seetaface.po.SeetaRect;
 
 /**
  * 
- * @author YeZhiCong
+ * @author Onion_Ye
  * @time 2020年6月18日 下午1:12:42
  */
 public class SeetafaceUtil {
@@ -34,7 +34,7 @@ public class SeetafaceUtil {
 	 * 将BufferedImage转为SeetaImage
 	 * @param bufferedImage 图片
 	 * @return BGR属性
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年6月18日 下午1:14:39
 	 */
 	public static SeetaImageData toSeetaImageData(BufferedImage bufferedImage) {
@@ -56,7 +56,7 @@ public class SeetafaceUtil {
 
 	/**
 	 * 图片转bgr字节数组
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年7月9日 下午2:28:42
 	 */
 	private static byte[] getBgr(BufferedImage image) {
@@ -80,7 +80,7 @@ public class SeetafaceUtil {
 
 	/**
 	 * 判断是否为bgr
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年7月9日 下午2:29:00
 	 */
 	private static boolean isBgr(BufferedImage image) {
@@ -94,7 +94,7 @@ public class SeetafaceUtil {
 	/**
 	 * 转为seetaImageData
 	 * @param path 路径
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年6月19日 下午9:06:39
 	 */
 	public static SeetaImageData toSeetaImageData(String path) {
@@ -103,7 +103,7 @@ public class SeetafaceUtil {
 	
 	/**
 	 * 转为seetaImageData
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年6月19日 下午9:06:39
 	 */
 	public static SeetaImageData toSeetaImageData(File file) {
@@ -115,7 +115,7 @@ public class SeetafaceUtil {
 	 * @param file
 	 * @return
 	 * @throws IOException
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年7月9日 下午3:03:42
 	 */
 	public static BufferedImage toBufferedImage(String path) {
@@ -127,7 +127,7 @@ public class SeetafaceUtil {
 	 * @param file
 	 * @return
 	 * @throws IOException
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年7月9日 下午3:03:42
 	 */
 	public static BufferedImage toBufferedImage(File file) {
@@ -145,7 +145,7 @@ public class SeetafaceUtil {
 	 * @param width 宽
 	 * @param height 高
 	 * @return 图片
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年7月9日 下午2:30:02
 	 */
 	public static BufferedImage toBufferedImage(byte[] data, int width, int height) {

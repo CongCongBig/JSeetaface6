@@ -17,7 +17,7 @@ import cn.yezhss.seetaface.util.SeetafaceUtil;
  * 回复关键字: JSeetaface6
  * 获取加群二维码
  * </pre>
- * @author YeZhiCong
+ * @author Onion_Ye
  * @time 2020年6月23日 下午4:12:56
  */
 public class FaceDetectorTest extends SeetafaceTest {

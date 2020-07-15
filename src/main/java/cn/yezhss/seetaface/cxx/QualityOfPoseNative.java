@@ -7,7 +7,7 @@ import cn.yezhss.seetaface.po.SeetaRect;
 
 /**
  * 非深度学习的人脸姿态评估器
- * @author YeZhiCong
+ * @author Onion_Ye
  * @time 2020年7月9日 上午10:23:41
  */
 public class QualityOfPoseNative {
@@ -15,7 +15,7 @@ public class QualityOfPoseNative {
 	/**
 	 * 
 	 * @return QualityOfPose在C++的序列化
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年7月9日 上午11:09:40
 	 */
 	public static native long init();
@@ -27,7 +27,7 @@ public class QualityOfPoseNative {
 	 * @param face 人脸位置
 	 * @param points 人脸5个特征数组
 	 * @return 人脸姿态检测结果
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年7月9日 上午11:07:02
 	 */
 	public static native QualityResult check(long nativeId, SeetaImageData image, SeetaRect face, SeetaPointF[] points);

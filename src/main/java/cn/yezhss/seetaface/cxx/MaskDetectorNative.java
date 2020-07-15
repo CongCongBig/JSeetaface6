@@ -7,7 +7,7 @@ import cn.yezhss.seetaface.po.SeetaRect;
 
 /**
  * 口罩检测
- * @author YeZhiCong
+ * @author Onion_Ye
  * @time 2020年6月24日 下午5:00:53
  */
 public class MaskDetectorNative {
@@ -16,7 +16,7 @@ public class MaskDetectorNative {
 	 * 初始化一个MaskDetector
 	 * @param setting 配置
 	 * @return MaskDetector在c++持久化的序列号
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年6月24日 下午5:02:27
 	 */
 	public static native long init(SeetaModelSetting setting);
@@ -28,7 +28,7 @@ public class MaskDetectorNative {
 	 * @param face 人脸位置
 	 * @param score 戴口罩的置信度
 	 * @return false没戴口罩/true戴了口罩
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年6月24日 下午5:07:49
 	 */
 	public static native MaskStatus detect(long nativeId, SeetaImageData image, SeetaRect face);

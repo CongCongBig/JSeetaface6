@@ -7,7 +7,7 @@ import cn.yezhss.seetaface.po.SeetaPointF;
 
 /**
  * 性别估计器
- * @author YeZhiCong
+ * @author Onion_Ye
  * @time 2020年6月22日 下午5:20:29
  */
 public class GenderPredictor {
@@ -17,7 +17,7 @@ public class GenderPredictor {
 	/**
 	 * 性别估计器
 	 * @param cstaPath gender_predictor.csta的路径
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年6月22日 下午5:58:44
 	 */
 	public GenderPredictor(String cstaPath) {
@@ -26,7 +26,7 @@ public class GenderPredictor {
 
 	/**
 	 * 性别估计器
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年6月22日 下午5:47:53
 	 */
 	public GenderPredictor(SeetaModelSetting seetaModelSetting) {
@@ -38,7 +38,7 @@ public class GenderPredictor {
 	 * @param image 原始图像数据
 	 * @param points 人脸特征点数
 	 * @return 裁剪好的人脸数据
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年6月22日 下午5:45:59
 	 */
 	public SeetaImageData cropFace(long nativeId, SeetaImageData image, SeetaPointF[] points) {
@@ -50,7 +50,7 @@ public class GenderPredictor {
 	 * @param face 裁剪好的人脸数据
 	 * @param gender 估计的性别 参考GenderPredictor.GENDER
 	 * @return true表示估计成功
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年6月22日 下午5:42:46
 	 */
 	public Gender predictGender(long nativeId, SeetaImageData face) {
@@ -62,7 +62,7 @@ public class GenderPredictor {
 	 * 
 	 * @param result
 	 * @return
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年6月29日 下午2:59:57
 	 */
 	private Gender toGender(int result) {
@@ -81,7 +81,7 @@ public class GenderPredictor {
 	 * @param points 人脸特征点
 	 * @param gender 估计的性别 参考GenderPredictor.GENDER
 	 * @return true表示估计成功
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年6月22日 下午5:35:48
 	 */
 	public Gender predictGenderWithCrop(SeetaImageData image, SeetaPointF[] points) {
@@ -93,7 +93,7 @@ public class GenderPredictor {
 	 * 设置相关属性值
 	 * @param property 属性类型 参考GenderPredictor.Property
 	 * @param value 设置的属性值
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年6月22日 下午5:30:19
 	 */
 	public void set(Property property, double value) {
@@ -104,7 +104,7 @@ public class GenderPredictor {
 	 * 获取相关属性值
 	 * @param property 属性类型 参考GenderPredictor.Property
 	 * @return 属性值
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年6月22日 下午5:30:19
 	 */
 	public double get(Property property) {
@@ -113,7 +113,7 @@ public class GenderPredictor {
 
 	/**
 	 * 相关属性
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年6月22日 下午5:54:11
 	 */
 	public enum Property {
@@ -136,7 +136,7 @@ public class GenderPredictor {
 
 	/**
 	 * 性别
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年6月22日 下午5:54:19
 	 */
 	public enum Gender {

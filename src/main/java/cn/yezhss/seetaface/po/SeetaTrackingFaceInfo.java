@@ -2,7 +2,7 @@ package cn.yezhss.seetaface.po;
 
 /**
  * 人脸信息
- * @author YeZhiCong
+ * @author Onion_Ye
  * @time 2020年7月10日 下午2:30:09
  */
 public class SeetaTrackingFaceInfo {

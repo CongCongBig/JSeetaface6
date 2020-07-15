@@ -8,7 +8,7 @@ import cn.yezhss.seetaface.po.SeetaRect;
 
 /**
  * 非深度的人脸亮度评估器
- * @author YeZhiCong
+ * @author Onion_Ye
  * @time 2020年7月3日 下午3:02:17
  */
 public class QualityOfBrightness {
@@ -17,7 +17,7 @@ public class QualityOfBrightness {
 	
 	/**
 	 * 默认值为{level0:70, 100, 210, 230}
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年7月9日 上午11:26:58
 	 */
 	public QualityOfBrightness() {
@@ -26,7 +26,7 @@ public class QualityOfBrightness {
 	
 	/**
 	 * 分类依据为[0, v0) & [v3, ~) => LOW;[v0, v1) & [v2, v3) => MEDIUM;[v1, v2) => HIGH;
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年7月9日 上午11:27:12
 	 */
 	public QualityOfBrightness(float v0, float v1, float v2, float v3) {
@@ -39,7 +39,7 @@ public class QualityOfBrightness {
 	 * @param face 人脸位置
 	 * @param points 人脸特征点数组
 	 * @return 人脸亮度检测结果
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年7月6日 上午11:41:53
 	 */
 	public QualityResult check(SeetaImageData image, SeetaRect face, SeetaPointF[] points) {

@@ -8,7 +8,7 @@ import cn.yezhss.seetaface.po.SeetaPointF;
 
 /**
  * 深度学习的人脸清晰度评估器
- * @author YeZhiCong
+ * @author Onion_Ye
  * @time 2020年7月6日 下午6:28:18
  */
 public class QualityOfLBN {
@@ -18,7 +18,7 @@ public class QualityOfLBN {
 	/**
 	 * 深度学习的人脸清晰度评估器
 	 * @param cstaPath quality_lbn.csta的路径
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年7月9日 上午11:41:19
 	 */
 	public QualityOfLBN(String cstaPath) {
@@ -27,7 +27,7 @@ public class QualityOfLBN {
 	
 	/**
 	 * 深度学习的人脸清晰度评估器
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年7月9日 上午11:40:21
 	 */
 	public QualityOfLBN(SeetaModelSetting setting) {
@@ -39,7 +39,7 @@ public class QualityOfLBN {
 	 * @param image 原始图像数据
 	 * @param points 人脸68个特征点数组
 	 * @return 模糊信息
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年7月9日 上午9:56:25
 	 */
 	public BlurInfo detect(SeetaImageData image, SeetaPointF[] points) {
@@ -51,7 +51,7 @@ public class QualityOfLBN {
 	 * @param nativeId QualityOfLBN在C++的序列号
 	 * @param property 参考 QualityOfLBN.Property.getValue
 	 * @param value 设置的属性值
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年7月9日 上午9:58:03
 	 */
 	public void set(Property property, double value) {
@@ -63,7 +63,7 @@ public class QualityOfLBN {
 	 * @param nativeId QualityOfLBN在C++的序列号
 	 * @param property 参考 QualityOfLBN.Property.getValue
 	 * @return 设置的属性值
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年7月9日 上午9:59:53
 	 */
 	public double get(Property property) {

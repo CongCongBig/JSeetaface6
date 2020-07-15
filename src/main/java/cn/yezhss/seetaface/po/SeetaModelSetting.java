@@ -2,7 +2,7 @@ package cn.yezhss.seetaface.po;
 
 /**
  * 
- * @author YeZhiCong
+ * @author Onion_Ye
  * @time 2020年6月19日 上午10:28:41
  */
 public class SeetaModelSetting {

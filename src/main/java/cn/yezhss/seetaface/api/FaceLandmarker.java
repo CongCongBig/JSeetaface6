@@ -8,7 +8,7 @@ import cn.yezhss.seetaface.po.SeetaRect;
 
 /**
  * 人脸特征点检测器
- * @author YeZhiCong
+ * @author Onion_Ye
  * @time 2020年6月22日 下午2:13:54
  */
 public class FaceLandmarker {
@@ -18,7 +18,7 @@ public class FaceLandmarker {
 	/**
 	 * 人脸特征点检测器
 	 * @param cstaPath face_landmarker_pts5.csta或face_landmarker_pts68.csta的路径
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年6月22日 下午5:17:37
 	 */
 	public FaceLandmarker(String cstaPath) {
@@ -28,7 +28,7 @@ public class FaceLandmarker {
 	/**
 	 * 人脸特征点检测器
 	 * @param seetaModelSetting 检测器结构参数
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年6月22日 下午5:18:33
 	 */
 	public FaceLandmarker(SeetaModelSetting seetaModelSetting) {
@@ -38,7 +38,7 @@ public class FaceLandmarker {
 	/**
 	 * 获取模型对应的特征点数组长度
 	 * @return 模型特征点数组长度
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年6月22日 下午1:28:26
 	 */
 	public int number() {
@@ -51,7 +51,7 @@ public class FaceLandmarker {
 	 * @param image 图像原始数据
 	 * @param face 人脸位置
 	 * @return 人脸特征点数组
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年6月22日 下午1:31:11
 	 */
 	public PointWithMask[] mark(SeetaImageData image, SeetaRect face) {

@@ -8,7 +8,7 @@ import cn.yezhss.seetaface.po.SeetaPointF;
 
 /**
  * 眼睛状态检测器
- * @author YeZhiCong
+ * @author Onion_Ye
  * @time 2020年6月22日 下午6:24:23
  */
 public class EyeStateDetector {
@@ -18,7 +18,7 @@ public class EyeStateDetector {
 	/**
 	 * 眼睛状态检测器
 	 * @param cstaPath eye_state.csta的路径
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年6月22日 下午6:25:27
 	 */
 	public EyeStateDetector(String cstaPath) {
@@ -27,7 +27,7 @@ public class EyeStateDetector {
 
 	/**
 	 * 眼睛状态检测器
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年6月22日 下午6:25:02
 	 */
 	public EyeStateDetector(SeetaModelSetting seetaModelSetting) {
@@ -39,7 +39,7 @@ public class EyeStateDetector {
 	 * @param image 原始图像数据
 	 * @param points 人脸特征点数组
 	 * @return 眼睛状态
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年6月22日 下午6:13:19
 	 */
 	public EyeState detect(SeetaImageData image, SeetaPointF[] points) {
@@ -50,7 +50,7 @@ public class EyeStateDetector {
 	 * 设置相关属性值
 	 * @param property 属性类型 参考EyeStateDetector.Property
 	 * @param value 设置的属性值
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年6月22日 下午5:30:19
 	 */
 	public void set(Property property, double value) {
@@ -61,7 +61,7 @@ public class EyeStateDetector {
 	 * 获取相关属性值
 	 * @param property 属性类型 参考EyeStateDetector.Property
 	 * @return 属性值
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年6月22日 下午5:30:19
 	 */
 	public double get(long nativeId, Property property) {

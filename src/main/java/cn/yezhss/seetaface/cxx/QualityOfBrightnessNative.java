@@ -7,7 +7,7 @@ import cn.yezhss.seetaface.po.SeetaRect;
 
 /**
  * 非深度的人脸亮度评估器
- * @author YeZhiCong
+ * @author Onion_Ye
  * @time 2020年7月3日 下午3:02:17
  */
 public class QualityOfBrightnessNative {
@@ -15,7 +15,7 @@ public class QualityOfBrightnessNative {
 	/**
 	 * 默认值为{level0:70, 100, 210, 230}
 	 * @return
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年7月3日 下午3:04:52
 	 */
 	public static native long init();
@@ -27,7 +27,7 @@ public class QualityOfBrightnessNative {
 	 * @param v2 分级参数三
 	 * @param v3 分级参数四
 	 * @return QualityOfBrightness在C++的序列化
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年7月6日 上午11:40:03
 	 */
 	public static native long init(float v0, float v1, float v2, float v3);
@@ -39,7 +39,7 @@ public class QualityOfBrightnessNative {
 	 * @param face 人脸位置
 	 * @param points 人脸特征点数组
 	 * @return 人脸亮度检测结果
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年7月6日 上午11:41:53
 	 */
 	public static native QualityResult check(long nativeId, SeetaImageData image, SeetaRect face, SeetaPointF[] points);

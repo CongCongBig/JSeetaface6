@@ -7,7 +7,7 @@ import cn.yezhss.seetaface.po.SeetaRect;
 
 /**
  * 非深度学习的人脸清晰度评估器
- * @author YeZhiCong
+ * @author Onion_Ye
  * @time 2020年7月6日 上午11:53:09
  */
 public class QualityOfClarityNative {
@@ -15,7 +15,7 @@ public class QualityOfClarityNative {
 	/**
 	 * 默认值为low=0.1 high=0.2 {@link this#init(float, float)}
 	 * @return QualityOfClarity在C++的序列化
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年7月6日 下午2:47:51
 	 */
 	public static native long init();
@@ -29,7 +29,7 @@ public class QualityOfClarityNative {
 	 * @param low 分级参数一
 	 * @param high 分级参数二
 	 * @return QualityOfClarity在C++的序列化
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年7月6日 下午2:50:59
 	 */
 	public static native long init(float low, float high);
@@ -41,7 +41,7 @@ public class QualityOfClarityNative {
 	 * @param face 人脸位置
 	 * @param points 人脸特征点数组
 	 * @return 人脸清晰度检测结果
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年7月6日 下午6:26:19
 	 */
 	public static native QualityResult check(long nativeId, SeetaImageData image, SeetaRect face, SeetaPointF[] points);

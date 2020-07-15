@@ -8,7 +8,7 @@ import cn.yezhss.seetaface.po.SeetaRect;
 
 /**
  * 非深度学习的人脸完整度评估器，评估人脸靠近图像边缘的程度。
- * @author YeZhiCong
+ * @author Onion_Ye
  * @time 2020年7月9日 上午10:23:41
  */
 public class QualityOfIntegrity {
@@ -17,7 +17,7 @@ public class QualityOfIntegrity {
 	
 	/**
 	 * 人脸完整评估器构造函数。
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年7月9日 上午11:37:12
 	 */
 	public QualityOfIntegrity() {
@@ -29,7 +29,7 @@ public class QualityOfIntegrity {
 	 * @param low 分级参数一
 	 * @param high 分级参数二
 	 * @return QualityOfPose在C++的序列化
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年7月9日 上午11:37:46
 	 */
 	public QualityOfIntegrity(float low, float high) {
@@ -42,7 +42,7 @@ public class QualityOfIntegrity {
 	 * @param face 人脸位置
 	 * @param points 人脸5个特征数组
 	 * @return 人脸姿态检测结果
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年7月9日 上午11:07:02
 	 */
 	public QualityResult check(SeetaImageData image, SeetaRect face, SeetaPointF[] points) {
