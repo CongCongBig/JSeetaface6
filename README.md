@@ -1,0 +1,2 @@
+# automatic-carnival
+基于中科院seetaface6进行封装的JAVA人脸识别算法库
