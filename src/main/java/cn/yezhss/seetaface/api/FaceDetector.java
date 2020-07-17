@@ -3,6 +3,10 @@ package cn.yezhss.seetaface.api;
 import cn.yezhss.seetaface.po.SeetaFaceInfoArray;
 import cn.yezhss.seetaface.po.SeetaImageData;
 import cn.yezhss.seetaface.po.SeetaModelSetting;
+
+import java.io.Closeable;
+import java.io.IOException;
+
 import cn.yezhss.seetaface.cxx.FaceDetectorNative;
 
 /**
@@ -10,7 +14,7 @@ import cn.yezhss.seetaface.cxx.FaceDetectorNative;
  * @author Onion_Ye
  * @time 2020年6月22日 下午12:02:01
  */
-public class FaceDetector {
+public class FaceDetector implements Closeable {
 
 	private final long NATIVE_ID;
 	
@@ -68,6 +72,15 @@ public class FaceDetector {
 	}
 	
 	/**
+	 * 释放资源
+	 * @author YeZhiCong
+	 * @time 2020年7月17日 下午5:01:47
+	 */
+	public void close() {
+		FaceDetectorNative.close(NATIVE_ID);
+	}
+	
+	/**
 	 * 可供修改的属性
 	 * @author Onion_Ye
 	 * @time 2020年6月22日 下午12:51:43
@@ -105,5 +118,5 @@ public class FaceDetector {
 			return num;
 		}
 	}
-	
+
 }

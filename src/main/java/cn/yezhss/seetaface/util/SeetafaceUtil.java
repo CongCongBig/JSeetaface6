@@ -39,7 +39,7 @@ public class SeetafaceUtil {
 	 */
 	public static SeetaImageData toSeetaImageData(BufferedImage bufferedImage) {
 		if (bufferedImage == null) {
-			return null;
+			throw new NullPointerException("图片不能为空.");
 		}
 		try {
 			SeetaImageData imageData = new SeetaImageData();
@@ -49,9 +49,8 @@ public class SeetafaceUtil {
 			imageData.data = getBgr(bufferedImage);
 			return imageData;
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
-		return null;
 	}
 
 	/**

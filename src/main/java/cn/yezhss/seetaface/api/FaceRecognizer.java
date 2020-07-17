@@ -1,5 +1,7 @@
 package cn.yezhss.seetaface.api;
 
+import java.io.Closeable;
+
 import cn.yezhss.seetaface.cxx.FaceRecognizerNative;
 import cn.yezhss.seetaface.po.SeetaImageData;
 import cn.yezhss.seetaface.po.SeetaModelSetting;
@@ -10,7 +12,7 @@ import cn.yezhss.seetaface.po.SeetaPointF;
  * @author Onion_Ye
  * @time 2020年7月10日 下午2:44:00
  */
-public class FaceRecognizer {
+public class FaceRecognizer implements Closeable {
 	
 	private final long NATIVE_ID;
 
@@ -99,6 +101,15 @@ public class FaceRecognizer {
 	 */
 	public double get(int property) {
 		return FaceRecognizerNative.get(NATIVE_ID, property);
+	}
+	
+	/**
+	 * 释放C++资源
+	 * @author YeZhiCong
+	 * @time 2020年7月17日 下午5:00:13
+	 */
+	public void close() {
+		FaceRecognizerNative.close(NATIVE_ID);
 	}
 	
 	public enum Property {

@@ -51,4 +51,12 @@ public class FaceDetectorNative {
 	 */
 	public static native double get(long nativeId, int property);
 	
+	/**
+	 * 释放资源
+	 * @param nativeId FaceDetector在c++持久化的序列号
+	 * @author YeZhiCong
+	 * @time 2020年7月17日 下午4:51:27
+	 */
+	public static native void close(long nativeId);
+	
 }

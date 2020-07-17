@@ -82,4 +82,12 @@ public class FaceRecognizerNative {
 	 */
 	public static native double get(long nativeId, int property);
 	
+	/**
+	 * 释放资源
+	 * @param nativeId FaceRecognizer在c++的序列化
+	 * @author YeZhiCong
+	 * @time 2020年7月17日 下午4:51:27
+	 */
+	public static native void close(long nativeId);
+	
 }

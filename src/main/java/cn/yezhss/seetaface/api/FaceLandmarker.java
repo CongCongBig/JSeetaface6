@@ -1,5 +1,7 @@
 package cn.yezhss.seetaface.api;
 
+import java.io.Closeable;
+
 import cn.yezhss.seetaface.cxx.FaceLandmarkerNative;
 import cn.yezhss.seetaface.po.PointWithMask;
 import cn.yezhss.seetaface.po.SeetaImageData;
@@ -11,7 +13,7 @@ import cn.yezhss.seetaface.po.SeetaRect;
  * @author Onion_Ye
  * @time 2020年6月22日 下午2:13:54
  */
-public class FaceLandmarker {
+public class FaceLandmarker implements Closeable {
 
 	private final long NATIVE_ID;
 	
@@ -56,6 +58,15 @@ public class FaceLandmarker {
 	 */
 	public PointWithMask[] mark(SeetaImageData image, SeetaRect face) {
 		return FaceLandmarkerNative.mark(NATIVE_ID, image, face);
+	}
+
+	/**
+	 * 释放资源
+	 * @author YeZhiCong
+	 * @time 2020年7月17日 下午5:01:11
+	 */
+	public void close() {
+		FaceLandmarkerNative.close(NATIVE_ID);
 	}
 	
 }
