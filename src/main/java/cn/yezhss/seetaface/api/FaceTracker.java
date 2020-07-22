@@ -1,18 +1,23 @@
 package cn.yezhss.seetaface.api;
 
+import java.io.Closeable;
+
 import cn.yezhss.seetaface.cxx.FaceTrackerNative;
 import cn.yezhss.seetaface.po.SeetaImageData;
 import cn.yezhss.seetaface.po.SeetaModelSetting;
 import cn.yezhss.seetaface.po.SeetaTrackingFaceInfoArray;
+import cn.yezhss.seetaface.util.SeetaAssert;
 
 /**
  * 人脸跟踪器,人脸跟踪器会对输入的彩色图像或者灰度图像中的人脸进行跟踪，并返回所有跟踪到的人脸信息。
  * @author Onion_Ye
  * @time 2020年7月10日 下午2:20:06
  */
-public class FaceTracker {
+public class FaceTracker implements Closeable {
 	
 	private final long NATIVE_ID;
+	
+	private boolean isClose = false;
 
 	/**
 	 * 人脸跟踪器的构造器
@@ -45,6 +50,7 @@ public class FaceTracker {
 	 * @time 2020年7月10日 下午2:27:11
 	 */
 	public void setSingleCalculationThreads(int num) {
+		SeetaAssert.validate(isClose);
 		FaceTrackerNative.setSingleCalculationThreads(NATIVE_ID, num);
 	}
 	
@@ -57,6 +63,7 @@ public class FaceTracker {
 	 * @time 2020年7月10日 下午2:32:20
 	 */
 	public SeetaTrackingFaceInfoArray track(SeetaImageData image, int frameNo) {
+		SeetaAssert.validate(isClose, image);
 		return FaceTrackerNative.track(NATIVE_ID, image, frameNo);
 	}
 	
@@ -67,6 +74,7 @@ public class FaceTracker {
 	 * @time 2020年7月10日 下午2:34:10
 	 */
 	public void setMinFaceSize(int size) {
+		SeetaAssert.validate(isClose);
 		FaceTrackerNative.setMinFaceSize(NATIVE_ID, size);
 	}
 	
@@ -77,6 +85,7 @@ public class FaceTracker {
 	 * @time 2020年7月10日 下午2:35:43
 	 */
 	public int getMinFaceSize() {
+		SeetaAssert.validate(isClose);
 		return FaceTrackerNative.getMinFaceSize(NATIVE_ID);
 	}
 	
@@ -87,6 +96,7 @@ public class FaceTracker {
 	 * @time 2020年7月10日 下午2:37:57
 	 */
 	public void setThreshold(float thresh) {
+		SeetaAssert.validate(isClose);
 		FaceTrackerNative.setThreshold(NATIVE_ID, thresh);
 	}
 	
@@ -97,6 +107,7 @@ public class FaceTracker {
 	 * @time 2020年7月10日 下午2:39:29
 	 */
 	public float getThreshold() {
+		SeetaAssert.validate(isClose);
 		return FaceTrackerNative.getThreshold(NATIVE_ID);
 	}
 	
@@ -107,6 +118,7 @@ public class FaceTracker {
 	 * @time 2020年7月10日 下午2:41:02
 	 */
 	public void setVideoStable(boolean stable) {
+		SeetaAssert.validate(isClose);
 		FaceTrackerNative.setVideoStable(NATIVE_ID, stable);
 	}
 	
@@ -117,7 +129,19 @@ public class FaceTracker {
 	 * @time 2020年7月10日 下午2:42:00
 	 */
 	public boolean getVideoStable() {
+		SeetaAssert.validate(isClose);
 		return FaceTrackerNative.getVideoStable(NATIVE_ID);
+	}
+
+	/**
+	 * 释放资源
+	 * @author Onion_Ye
+	 * @time 2020年7月21日 上午9:36:58
+	 */
+	public void close() {
+		SeetaAssert.validate(isClose);
+		FaceTrackerNative.close(NATIVE_ID);
+		isClose = true;
 	}
 	
 }

@@ -32,6 +32,13 @@ public class MaskDetectorNative {
 	 * @time 2020年6月24日 下午5:07:49
 	 */
 	public static native MaskStatus detect(long nativeId, SeetaImageData image, SeetaRect face);
-	
+
+	/**
+	 * 释放资源
+	 * @param nativeId MaskDetector在c++持久化的序列号
+	 * @author Onion_Ye
+	 * @time 2020年7月20日 上午9:57:26
+	 */
+	public static native void close(long nativeId);
 	
 }

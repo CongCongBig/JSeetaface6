@@ -1,21 +1,26 @@
 package cn.yezhss.seetaface.api;
 
 
+import java.io.Closeable;
+
 import cn.yezhss.seetaface.cxx.QualityOfPoseExNative;
 import cn.yezhss.seetaface.po.QualityResult;
 import cn.yezhss.seetaface.po.SeetaImageData;
 import cn.yezhss.seetaface.po.SeetaModelSetting;
 import cn.yezhss.seetaface.po.SeetaPointF;
 import cn.yezhss.seetaface.po.SeetaRect;
+import cn.yezhss.seetaface.util.SeetaAssert;
 
 /**
  * 深度学习的人脸姿态评估器。
  * @author Onion_Ye
  * @time 2020年7月9日 上午11:11:16
  */
-public class QualityOfPoseEx {
+public class QualityOfPoseEx implements Closeable {
 
 	private final long NATIVE_ID;
+	
+	private boolean isClose = false;
 
 	/**
 	 * 人脸姿态评估器构造函数。
@@ -47,6 +52,7 @@ public class QualityOfPoseEx {
 	 * @time 2020年7月9日 上午11:13:12
 	 */
 	public QualityResult check(SeetaImageData image, SeetaRect face, SeetaPointF[] points) {
+		SeetaAssert.validate(isClose, image, face, points);
 		return QualityOfPoseExNative.check(NATIVE_ID, image, face, points);
 	}
 	
@@ -59,6 +65,7 @@ public class QualityOfPoseEx {
 	 * @time 2020年7月9日 上午11:14:28
 	 */
 	public void set(Property property, double value) {
+		SeetaAssert.validate(isClose, property);
 		QualityOfPoseExNative.set(NATIVE_ID, property.getValue(), value);
 	}
 	
@@ -71,7 +78,20 @@ public class QualityOfPoseEx {
 	 * @time 2020年7月9日 上午11:16:27
 	 */
 	public double get(long nativeId, Property property) {
+		SeetaAssert.validate(isClose, property);
 		return QualityOfPoseExNative.get(NATIVE_ID, property.getValue());
+	}
+
+	/**
+	 * 释放资源
+	 * @param
+	 * @author Onion_Ye
+	 * @time 2020年7月20日 上午10:13:33
+	 */
+	public void close() {
+		SeetaAssert.validate(isClose);
+		QualityOfPoseExNative.close(NATIVE_ID);
+		this.isClose = true;
 	}
 	
 	public enum Property {
@@ -92,4 +112,5 @@ public class QualityOfPoseEx {
 			return num;
 		}
 	}
+
 }

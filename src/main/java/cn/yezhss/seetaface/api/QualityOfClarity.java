@@ -1,19 +1,24 @@
 package cn.yezhss.seetaface.api;
 
+import java.io.Closeable;
+
 import cn.yezhss.seetaface.cxx.QualityOfClarityNative;
 import cn.yezhss.seetaface.po.QualityResult;
 import cn.yezhss.seetaface.po.SeetaImageData;
 import cn.yezhss.seetaface.po.SeetaPointF;
 import cn.yezhss.seetaface.po.SeetaRect;
+import cn.yezhss.seetaface.util.SeetaAssert;
 
 /**
  * 非深度学习的人脸清晰度评估器
  * @author Onion_Ye
  * @time 2020年7月6日 上午11:53:09
  */
-public class QualityOfClarity {
+public class QualityOfClarity implements Closeable {
 
 	private final long NATIVE_ID;
+	
+	private boolean isClose = false;
 	
 	/**
 	 * 默认值为low=0.1 high=0.2 {@link this#init(float, float)}
@@ -49,7 +54,14 @@ public class QualityOfClarity {
 	 * @time 2020年7月6日 下午6:26:19
 	 */
 	public QualityResult check(SeetaImageData image, SeetaRect face, SeetaPointF[] points) {
+		SeetaAssert.validate(isClose, image, face, points);
 		return QualityOfClarityNative.check(NATIVE_ID, image, face, points);
+	}
+	
+	public void close() {
+		SeetaAssert.validate(isClose);
+		QualityOfClarityNative.close(NATIVE_ID);
+		isClose = true;
 	}
 	
 }

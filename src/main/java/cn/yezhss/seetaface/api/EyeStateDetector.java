@@ -1,19 +1,24 @@
 package cn.yezhss.seetaface.api;
 
+import java.io.Closeable;
+
 import cn.yezhss.seetaface.cxx.EyeStateDetectorNative;
 import cn.yezhss.seetaface.po.EyeState;
 import cn.yezhss.seetaface.po.SeetaImageData;
 import cn.yezhss.seetaface.po.SeetaModelSetting;
 import cn.yezhss.seetaface.po.SeetaPointF;
+import cn.yezhss.seetaface.util.SeetaAssert;
 
 /**
  * 眼睛状态检测器
  * @author Onion_Ye
  * @time 2020年6月22日 下午6:24:23
  */
-public class EyeStateDetector {
+public class EyeStateDetector implements Closeable {
 
 	private final long NATIVE_ID;
+	
+	private boolean isClose = false;
 	
 	/**
 	 * 眼睛状态检测器
@@ -31,6 +36,9 @@ public class EyeStateDetector {
 	 * @time 2020年6月22日 下午6:25:02
 	 */
 	public EyeStateDetector(SeetaModelSetting seetaModelSetting) {
+		if (seetaModelSetting == null) {
+			throw new NullPointerException("配置不能为空.");
+		}
 		NATIVE_ID = EyeStateDetectorNative.init(seetaModelSetting);
 	}
 	
@@ -43,6 +51,7 @@ public class EyeStateDetector {
 	 * @time 2020年6月22日 下午6:13:19
 	 */
 	public EyeState detect(SeetaImageData image, SeetaPointF[] points) {
+		SeetaAssert.validate(isClose, image, points);
 		return EyeStateDetectorNative.detect(NATIVE_ID, image, points);
 	}
 	
@@ -54,7 +63,8 @@ public class EyeStateDetector {
 	 * @time 2020年6月22日 下午5:30:19
 	 */
 	public void set(Property property, double value) {
-		EyeStateDetectorNative.set(NATIVE_ID, property.ordinal(), value);
+		SeetaAssert.validate(isClose, property);
+		EyeStateDetectorNative.set(NATIVE_ID, property.getValue(), value);
 	}
 	
 	/**
@@ -64,13 +74,35 @@ public class EyeStateDetector {
 	 * @author Onion_Ye
 	 * @time 2020年6月22日 下午5:30:19
 	 */
-	public double get(long nativeId, Property property) {
-		return EyeStateDetectorNative.get(NATIVE_ID, property.ordinal());
+	public double get(Property property) {
+		SeetaAssert.validate(isClose, property);
+		return EyeStateDetectorNative.get(NATIVE_ID, property.getValue());
+	}
+	
+	/**
+	 * 释放资源
+	 * @author Onion_Ye
+	 * @time 2020年7月17日 下午5:52:00
+	 */
+	public void close() {
+		SeetaAssert.validate(isClose);
+		EyeStateDetectorNative.close(NATIVE_ID);
+		isClose = true;
 	}
 	
 	public enum Property {
-		PROPERTY_NUMBER_THREADS,
-		PROPERTY_ARM_CPU_MODE
+		PROPERTY_NUMBER_THREADS(4),
+		PROPERTY_ARM_CPU_MODE(5);
+		
+		private int num;
+		
+		Property(int num) {
+			this.num = num;
+		}
+		
+		public int getValue() {
+			return num;
+		}
 	}
 	
 }

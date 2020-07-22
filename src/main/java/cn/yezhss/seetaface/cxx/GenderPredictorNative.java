@@ -73,5 +73,13 @@ public class GenderPredictorNative {
 	 * @time 2020年6月22日 下午5:30:19
 	 */
 	public static native double get(long nativeId, int property);
+
+	/**
+	 * 释放资源
+	 * @param nativeId
+	 * @author Onion_Ye
+	 * @time 2020年7月21日 上午9:44:29
+	 */
+	public static native void close(long nativeId);
 	
 }

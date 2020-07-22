@@ -6,6 +6,7 @@ import cn.yezhss.seetaface.cxx.FaceRecognizerNative;
 import cn.yezhss.seetaface.po.SeetaImageData;
 import cn.yezhss.seetaface.po.SeetaModelSetting;
 import cn.yezhss.seetaface.po.SeetaPointF;
+import cn.yezhss.seetaface.util.SeetaAssert;
 
 /**
  * 人脸识别器 人脸识别器要求输入原始图像数据和人脸特征点（或者裁剪好的人脸数据），对输入的人脸提取特征值数组，根据提取的特征值数组对人脸进行相似度比较。
@@ -15,6 +16,8 @@ import cn.yezhss.seetaface.po.SeetaPointF;
 public class FaceRecognizer implements Closeable {
 	
 	private final long NATIVE_ID;
+	
+	private boolean isClose = false;
 
 	/**
 	 * 人脸识别器的构造函数
@@ -43,6 +46,7 @@ public class FaceRecognizer implements Closeable {
 	 * @time 2020年7月10日 下午2:54:32
 	 */
 	public SeetaImageData cropFace(SeetaImageData image, SeetaPointF[] points) {
+		SeetaAssert.validate(isClose, image, points);
 		return FaceRecognizerNative.cropFace(NATIVE_ID, image, points);
 	}
 	
@@ -54,6 +58,7 @@ public class FaceRecognizer implements Closeable {
 	 * @time 2020年7月10日 下午2:57:32
 	 */
 	public float[] extractCroppedFace(SeetaImageData face) {
+		SeetaAssert.validate(isClose, face);
 		return FaceRecognizerNative.extractCroppedFace(NATIVE_ID, face);
 	}
 	
@@ -65,6 +70,7 @@ public class FaceRecognizer implements Closeable {
 	 * @time 2020年7月10日 下午2:57:32
 	 */
 	public float[] extract(SeetaImageData image, SeetaPointF[] points) {
+		SeetaAssert.validate(isClose, image, points);
 		return FaceRecognizerNative.extract(NATIVE_ID, image, points);
 	}
 	
@@ -77,6 +83,7 @@ public class FaceRecognizer implements Closeable {
 	 * @time 2020年7月10日 下午3:02:23
 	 */
 	public float calculateSimilarity(float[] features1, float[] features2) {
+		SeetaAssert.validate(isClose, features1, features2);
 		return FaceRecognizerNative.calculateSimilarity(NATIVE_ID, features1, features2);
 	}
 	
@@ -88,6 +95,7 @@ public class FaceRecognizer implements Closeable {
 	 * @time 2020年7月10日 下午3:04:17
 	 */
 	public void set(Property property, double value) {
+		SeetaAssert.validate(isClose, property);
 		FaceRecognizerNative.set(NATIVE_ID, property.getValue(), value);
 	}
 	
@@ -99,17 +107,20 @@ public class FaceRecognizer implements Closeable {
 	 * @author Onion_Ye
 	 * @time 2020年7月10日 下午3:05:28
 	 */
-	public double get(int property) {
-		return FaceRecognizerNative.get(NATIVE_ID, property);
+	public double get(Property property) {
+		SeetaAssert.validate(isClose, property);
+		return FaceRecognizerNative.get(NATIVE_ID, property.getValue());
 	}
 	
 	/**
 	 * 释放C++资源
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年7月17日 下午5:00:13
 	 */
 	public void close() {
+		SeetaAssert.validate(isClose);
 		FaceRecognizerNative.close(NATIVE_ID);
+		isClose = true;
 	}
 	
 	public enum Property {

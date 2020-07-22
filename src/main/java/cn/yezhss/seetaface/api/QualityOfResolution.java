@@ -1,19 +1,24 @@
 package cn.yezhss.seetaface.api;
 
+import java.io.Closeable;
+
 import cn.yezhss.seetaface.cxx.QualityOfResolutionNative;
 import cn.yezhss.seetaface.po.QualityResult;
 import cn.yezhss.seetaface.po.SeetaImageData;
 import cn.yezhss.seetaface.po.SeetaPointF;
 import cn.yezhss.seetaface.po.SeetaRect;
+import cn.yezhss.seetaface.util.SeetaAssert;
 
 /**
  * 非深度学习的人脸尺寸评估器。
  * @author Onion_Ye
  * @time 2020年7月9日 上午10:23:41
  */
-public class QualityOfResolution {
+public class QualityOfResolution implements Closeable {
 	
 	private final long NATIVE_ID;
+	
+	private boolean isClose = false;
 	
 	/**
 	 * 人脸尺寸评估器构造函数。
@@ -46,7 +51,19 @@ public class QualityOfResolution {
 	 * @time 2020年7月9日 上午11:07:02
 	 */
 	public QualityResult check(SeetaImageData image, SeetaRect face, SeetaPointF[] points) {
+		SeetaAssert.validate(isClose, image, face, points);
 		return QualityOfResolutionNative.check(NATIVE_ID, image, face, points);
+	}
+
+	/**
+	 * 释放流
+	 * @author Onion_Ye
+	 * @time 2020年7月20日 上午9:55:42
+	 */
+	public void close() {
+		SeetaAssert.validate(isClose);
+		QualityOfResolutionNative.close(NATIVE_ID);
+		this.isClose = true;
 	}
 	
 }

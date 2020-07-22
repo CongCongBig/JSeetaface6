@@ -53,4 +53,12 @@ public class QualityOfPoseExNative {
 	 * @time 2020年7月9日 上午11:16:27
 	 */
 	public static native double get(long nativeId, int property);
+
+	/**
+	 * 释放资源
+	 * @param nativeId QualityOfPoseEx在c++的序列化
+	 * @author Onion_Ye
+	 * @time 2020年7月20日 下午5:55:27
+	 */
+	public static native void close(long nativeId);
 }

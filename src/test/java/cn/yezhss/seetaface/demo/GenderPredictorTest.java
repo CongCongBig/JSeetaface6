@@ -43,6 +43,9 @@ public class GenderPredictorTest extends SeetafaceTest {
 			Gender gender = genderPredictor.predictGenderWithCrop(image, points);
 			System.out.printf("第%s张脸的性别为:%s\n", i++, gender.toString());
 		}
+		marker.close();
+		genderPredictor.close();
+		detector.close();
 	}
 	
 }

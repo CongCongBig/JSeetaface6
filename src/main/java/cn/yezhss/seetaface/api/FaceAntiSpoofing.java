@@ -1,20 +1,25 @@
 package cn.yezhss.seetaface.api;
 
+import java.io.Closeable;
+
 import cn.yezhss.seetaface.cxx.FaceAntiSpoofingNative;
 import cn.yezhss.seetaface.po.PreFrameScore;
 import cn.yezhss.seetaface.po.SeetaImageData;
 import cn.yezhss.seetaface.po.SeetaModelSetting;
 import cn.yezhss.seetaface.po.SeetaPointF;
 import cn.yezhss.seetaface.po.SeetaRect;
+import cn.yezhss.seetaface.util.SeetaAssert;
 
 /**
  * 活体识别
  * @author Onion_Ye
  * @time 2020年7月3日 上午10:15:13
  */
-public class FaceAntiSpoofing {
+public class FaceAntiSpoofing implements Closeable {
 
 	private final long NATIVE_ID;
+	
+	private boolean isClose = false;
 	
 	/**
 	 * 初始化一个活体识别器
@@ -33,6 +38,9 @@ public class FaceAntiSpoofing {
 	 * @time 2020年7月3日 上午10:16:32
 	 */
 	public FaceAntiSpoofing(SeetaModelSetting seetaModelSetting, String... cstaPathTwo) {
+		if (seetaModelSetting == null) {
+			throw new NullPointerException("配置不能为空.");
+		}
 		String appendCstaPath = cstaPathTwo == null || cstaPathTwo.length == 0 ? null : cstaPathTwo[0];
 		NATIVE_ID = FaceAntiSpoofingNative.init(seetaModelSetting, appendCstaPath);
 	}
@@ -51,6 +59,7 @@ public class FaceAntiSpoofing {
 	 * @time 2020年6月24日 下午5:59:45
 	 */
 	public Status predict(SeetaImageData image, SeetaRect face, SeetaPointF[] points) {
+		SeetaAssert.validate(isClose, image, face, points);
 		return Status.values()[FaceAntiSpoofingNative.predict(NATIVE_ID, image, face, points)];
 	}
 	
@@ -64,6 +73,7 @@ public class FaceAntiSpoofing {
 	 * @time 2020年6月24日 下午6:03:12
 	 */
 	public Status predictVideo(SeetaImageData image, SeetaRect face, SeetaPointF[] points) {
+		SeetaAssert.validate(isClose, image, face, points);
 		return Status.values()[FaceAntiSpoofingNative.predictVideo(NATIVE_ID, image, face, points)];
 	}
 	
@@ -73,6 +83,7 @@ public class FaceAntiSpoofing {
 	 * @time 2020年6月24日 下午6:04:55
 	 */
 	public void resetVideo() {
+		SeetaAssert.validate(isClose);
 		FaceAntiSpoofingNative.resetVideo(NATIVE_ID);
 	}
 	
@@ -83,6 +94,7 @@ public class FaceAntiSpoofing {
 	 * @time 2020年6月24日 下午6:08:27
 	 */
 	public PreFrameScore getPreFrameScore() {
+		SeetaAssert.validate(isClose);
 		return FaceAntiSpoofingNative.getPreFrameScore(NATIVE_ID);
 	}
 	
@@ -93,6 +105,7 @@ public class FaceAntiSpoofing {
 	 * @time 2020年6月24日 下午6:09:47
 	 */
 	public void setVideoFrameCount(int number) {
+		SeetaAssert.validate(isClose);
 		FaceAntiSpoofingNative.setVideoFrameCount(NATIVE_ID, number);
 	}
 	
@@ -103,6 +116,7 @@ public class FaceAntiSpoofing {
 	 * @time 2020年6月24日 下午6:10:27
 	 */
 	public int getVideoFrameCount() {
+		SeetaAssert.validate(isClose);
 		return FaceAntiSpoofingNative.getVideoFrameCount(NATIVE_ID);
 	}
 	
@@ -114,6 +128,7 @@ public class FaceAntiSpoofing {
 	 * @time 2020年6月24日 下午6:17:42
 	 */
 	public void setThreshold(float clarity, float reality) {
+		SeetaAssert.validate(isClose);
 		FaceAntiSpoofingNative.setThreshold(NATIVE_ID, clarity, reality);
 	}
 	
@@ -124,6 +139,7 @@ public class FaceAntiSpoofing {
 	 * @time 2020年6月24日 下午6:19:28
 	 */
 	public void setBoxThresh(float boxThresh) {
+		SeetaAssert.validate(isClose);
 		FaceAntiSpoofingNative.setBoxThresh(NATIVE_ID, boxThresh);
 	}
 	
@@ -134,6 +150,7 @@ public class FaceAntiSpoofing {
 	 * @time 2020年6月24日 下午6:20:03
 	 */
 	public float getBoxThresh() {
+		SeetaAssert.validate(isClose);
 		return FaceAntiSpoofingNative.getBoxThresh(NATIVE_ID);
 	}
 	
@@ -144,6 +161,7 @@ public class FaceAntiSpoofing {
 	 * @time 2020年6月24日 下午6:22:42
 	 */
 	public PreFrameScore getThreshold() {
+		SeetaAssert.validate(isClose);
 		return FaceAntiSpoofingNative.getThreshold(NATIVE_ID);
 	}
 	
@@ -155,6 +173,7 @@ public class FaceAntiSpoofing {
 	 * @time 2020年6月24日 下午6:25:15
 	 */
 	public void set(Property property, double value) {
+		SeetaAssert.validate(isClose, property);
 		FaceAntiSpoofingNative.set(NATIVE_ID, property.getValue(), value);
 	}
 	
@@ -167,7 +186,19 @@ public class FaceAntiSpoofing {
 	 * @time 2020年6月24日 下午6:26:06
 	 */
 	public double get(Property property) {
+		SeetaAssert.validate(isClose, property);
 		return FaceAntiSpoofingNative.get(NATIVE_ID, property.getValue());
+	}
+
+	/**
+	 * 释放资源
+	 * @author Onion_Ye
+	 * @time 2020年7月17日 下午6:19:29
+	 */
+	public void close() {
+		SeetaAssert.validate(isClose);
+		FaceAntiSpoofingNative.close(NATIVE_ID);
+		isClose = true;
 	}
 	
 	public enum Property {
@@ -203,5 +234,5 @@ public class FaceAntiSpoofing {
 		 */
 		DETECTING
 	}
-	
+
 }

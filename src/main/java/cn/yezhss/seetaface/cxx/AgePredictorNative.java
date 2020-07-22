@@ -73,4 +73,11 @@ public class AgePredictorNative {
 	 */
 	public static native double get(long nativeId, int property);
 	
+	/**
+	 * 释放资源
+	 * @param nativeId AgePredictor在c++持久化的序列号
+	 * @author Onion_Ye
+	 * @time 2020年7月17日 下午5:43:15
+	 */
+	public static native void close(long nativeId);
 }

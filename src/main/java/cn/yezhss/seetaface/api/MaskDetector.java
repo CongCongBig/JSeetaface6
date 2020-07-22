@@ -1,19 +1,24 @@
 package cn.yezhss.seetaface.api;
 
+import java.io.Closeable;
+
 import cn.yezhss.seetaface.cxx.MaskDetectorNative;
 import cn.yezhss.seetaface.po.MaskStatus;
 import cn.yezhss.seetaface.po.SeetaImageData;
 import cn.yezhss.seetaface.po.SeetaModelSetting;
 import cn.yezhss.seetaface.po.SeetaRect;
+import cn.yezhss.seetaface.util.SeetaAssert;
 
 /**
  * 口罩检测器
  * @author Onion_Ye
  * @time 2020年6月24日 下午5:11:58
  */
-public class MaskDetector {
+public class MaskDetector implements Closeable {
 	
 	private final long NATIVE_ID;
+	
+	private boolean isClose = false;
 
 	/**
 	 * 口罩检测器
@@ -44,7 +49,19 @@ public class MaskDetector {
 	 * @time 2020年6月24日 下午5:07:49
 	 */
 	public MaskStatus detect(SeetaImageData image, SeetaRect face) {
+		SeetaAssert.validate(isClose, image, face);
 		return MaskDetectorNative.detect(NATIVE_ID, image, face);
+	}
+	
+	/**
+	 * 释放资源
+	 * @author Onion_Ye
+	 * @time 2020年7月21日 上午9:36:58
+	 */
+	public void close() {
+		SeetaAssert.validate(isClose);
+		MaskDetectorNative.close(NATIVE_ID);
+		isClose = true;
 	}
 	
 }

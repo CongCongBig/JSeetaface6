@@ -51,5 +51,13 @@ public class EyeStateDetectorNative {
 	 * @time 2020年6月22日 下午5:30:19
 	 */
 	public static native double get(long nativeId, int property);
+
+	/**
+	 * 释放资源
+	 * @param nativeId 持久化ID
+	 * @author Onion_Ye
+	 * @time 2020年7月17日 下午5:50:57
+	 */
+	public static native void close(long nativeId);
 	
 }

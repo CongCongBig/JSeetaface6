@@ -1,19 +1,24 @@
 package cn.yezhss.seetaface.api;
 
+import java.io.Closeable;
+
 import cn.yezhss.seetaface.cxx.QualityOfLBNNative;
 import cn.yezhss.seetaface.po.BlurInfo;
 import cn.yezhss.seetaface.po.SeetaImageData;
 import cn.yezhss.seetaface.po.SeetaModelSetting;
 import cn.yezhss.seetaface.po.SeetaPointF;
+import cn.yezhss.seetaface.util.SeetaAssert;
 
 /**
  * 深度学习的人脸清晰度评估器
  * @author Onion_Ye
  * @time 2020年7月6日 下午6:28:18
  */
-public class QualityOfLBN {
+public class QualityOfLBN implements Closeable {
 	
 	private final long NATIVE_ID;
+	
+	private boolean isClose = false;
 	
 	/**
 	 * 深度学习的人脸清晰度评估器
@@ -43,6 +48,7 @@ public class QualityOfLBN {
 	 * @time 2020年7月9日 上午9:56:25
 	 */
 	public BlurInfo detect(SeetaImageData image, SeetaPointF[] points) {
+		SeetaAssert.validate(isClose, image, points);
 		return QualityOfLBNNative.detect(NATIVE_ID, image, points);
 	}
 
@@ -55,6 +61,7 @@ public class QualityOfLBN {
 	 * @time 2020年7月9日 上午9:58:03
 	 */
 	public void set(Property property, double value) {
+		SeetaAssert.validate(isClose, property);
 		QualityOfLBNNative.set(NATIVE_ID, property.getValue(), value);
 	}
 	
@@ -67,7 +74,19 @@ public class QualityOfLBN {
 	 * @time 2020年7月9日 上午9:59:53
 	 */
 	public double get(Property property) {
+		SeetaAssert.validate(isClose, property);
 		return QualityOfLBNNative.get(NATIVE_ID, property.getValue());
+	}
+	
+	/**
+	 * 释放资源
+	 * @author Onion_Ye
+	 * @time 2020年7月20日 下午6:06:55
+	 */
+	public void close() {
+		SeetaAssert.validate(isClose);
+		QualityOfLBNNative.close(NATIVE_ID);
+		isClose = true;
 	}
 	
 	public enum Property {
@@ -96,5 +115,5 @@ public class QualityOfLBN {
 			return value;
 		}
 	}
-	
+
 }

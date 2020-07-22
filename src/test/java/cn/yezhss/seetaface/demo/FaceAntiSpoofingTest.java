@@ -43,6 +43,9 @@ public class FaceAntiSpoofingTest extends SeetafaceTest {
 			Status status = faceAntiSpoofing.predict(image, rect, points);
 			System.out.printf("第%s张脸活体检测结果为:%s\n", i++, status);
 		}
+		faceAntiSpoofing.close();
+		marker.close();
+		detector.close();
 	}
 	
 }

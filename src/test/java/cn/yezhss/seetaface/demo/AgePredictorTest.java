@@ -42,6 +42,9 @@ public class AgePredictorTest extends SeetafaceTest {
 			int age = agePredictor.predictAgeWithCrop(image, points);
 			System.out.printf("第%s张脸的年龄为:%s\n", i++, age);
 		}
+		marker.close();
+		agePredictor.close();
+		detector.close();
 	}
 	
 }

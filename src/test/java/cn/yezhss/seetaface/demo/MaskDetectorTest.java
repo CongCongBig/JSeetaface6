@@ -34,6 +34,8 @@ public class MaskDetectorTest extends SeetafaceTest  {
 			MaskStatus status = maskDetector.detect(image, rect);
 			System.out.printf("第%s张人脸%s口罩,口罩值为:%f\n", i++, status.status ? "戴了" : "没戴", status.score);
 		}
+		maskDetector.close();
+		detector.close();
 	}
 	
 }

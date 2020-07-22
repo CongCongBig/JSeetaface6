@@ -38,6 +38,9 @@ public class EyeStateDetectorTest extends SeetafaceTest {
 			EyeState state = eyeStateDetector.detect(image, points);
 			System.out.printf("第%s张人脸左眼状态:%s,右眼状态:%s\n", i++, state2Desc(state.left), state2Desc(state.right));
 		}
+		eyeStateDetector.close();
+		marker.close();
+		detector.close();
 	}
 	
 	public static String state2Desc(int state) {

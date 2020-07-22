@@ -41,5 +41,13 @@ public class QualityOfIntegrityNative {
 	 * @time 2020年7月9日 上午11:07:02
 	 */
 	public static native QualityResult check(long nativeId, SeetaImageData image, SeetaRect face, SeetaPointF[] points);
+
+	/**
+	 * 释放资源
+	 * @param nativeId QualityOfPose在C++的序列化
+	 * @author Onion_Ye
+	 * @time 2020年7月21日 上午9:28:11
+	 */
+	public static native void close(long nativeId);
 	
 }

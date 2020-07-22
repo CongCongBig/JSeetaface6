@@ -42,6 +42,9 @@ public class FaceDetectorTest extends SeetafaceTest {
 			SeetafaceUtil.writeRect(image, rect);
 		}
 		SeetafaceUtil.show("人脸检测", image);
+		
+		detector.close();
+		
 	}
 	
 }

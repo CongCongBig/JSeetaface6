@@ -51,5 +51,13 @@ public class QualityOfLBNNative {
 	 * @time 2020年7月9日 上午9:59:53
 	 */
 	public static native double get(long nativeId, int property);
+
+	/**
+	 * 释放资源
+	 * @param nativeId QualityOfLBN在C++的序列号
+	 * @author Onion_Ye
+	 * @time 2020年7月21日 上午9:25:49
+	 */
+	public static native void close(long nativeId);
 	
 }

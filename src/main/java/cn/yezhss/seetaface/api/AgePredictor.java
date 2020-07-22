@@ -1,18 +1,23 @@
 package cn.yezhss.seetaface.api;
 
+import java.io.Closeable;
+
 import cn.yezhss.seetaface.cxx.AgePredictorNative;
 import cn.yezhss.seetaface.po.SeetaImageData;
 import cn.yezhss.seetaface.po.SeetaModelSetting;
 import cn.yezhss.seetaface.po.SeetaPointF;
+import cn.yezhss.seetaface.util.SeetaAssert;
 
 /**
  * 年龄估计器
  * @author Onion_Ye
  * @time 2020年6月23日 上午9:51:36
  */
-public class AgePredictor {
+public class AgePredictor implements Closeable {
 	
 	private final long NATIVE_ID;
+	
+	private boolean isClose = false;
 	
 	/**
 	 * 年龄估计器
@@ -30,6 +35,9 @@ public class AgePredictor {
 	 * @time 2020年6月24日 下午5:43:03
 	 */
 	public AgePredictor(SeetaModelSetting seetaModelSetting) {
+		if (seetaModelSetting == null) {
+			throw new NullPointerException("配置不能为空.");
+		}
 		NATIVE_ID = AgePredictorNative.init(seetaModelSetting);
 	}
 	
@@ -44,6 +52,7 @@ public class AgePredictor {
 	 * @time 2020年6月24日 下午5:26:51
 	 */
 	public SeetaImageData cropFace(SeetaImageData image, SeetaPointF[] points) {
+		SeetaAssert.validate(isClose, image, points);
 		return AgePredictorNative.cropFace(NATIVE_ID, image, points);
 	}
 	
@@ -55,6 +64,7 @@ public class AgePredictor {
 	 * @time 2020年6月24日 下午5:30:12
 	 */
 	public int predictAge(SeetaImageData image) {
+		SeetaAssert.validate(isClose, image);
 		return AgePredictorNative.predictAge(NATIVE_ID, image);
 	}
 	
@@ -67,6 +77,7 @@ public class AgePredictor {
 	 * @time 2020年6月24日 下午5:33:38
 	 */
 	public int predictAgeWithCrop(SeetaImageData image, SeetaPointF[] points) {
+		SeetaAssert.validate(isClose, image, points);
 		return AgePredictorNative.predictAgeWithCrop(NATIVE_ID, image, points);
 	}
 	
@@ -78,6 +89,7 @@ public class AgePredictor {
 	 * @time 2020年6月24日 下午5:34:53
 	 */
 	public void set(Property property, double value) {
+		SeetaAssert.validate(isClose, property);
 		AgePredictorNative.set(NATIVE_ID, property.getValue(), value);
 	}
 	
@@ -89,7 +101,19 @@ public class AgePredictor {
 	 * @time 2020年6月24日 下午5:36:15
 	 */
 	public double get(Property property) {
+		SeetaAssert.validate(isClose, property);
 		return AgePredictorNative.get(NATIVE_ID, property.getValue());
+	}
+
+	/**
+	 * 释放资源
+	 * @author Onion_Ye
+	 * @time 2020年7月17日 下午5:44:31
+	 */
+	public void close() {
+		SeetaAssert.validate(isClose);
+		AgePredictorNative.close(NATIVE_ID);
+		isClose = true;
 	}
 	
 	public enum Property {

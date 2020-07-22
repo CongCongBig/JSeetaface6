@@ -1,19 +1,24 @@
 package cn.yezhss.seetaface.api;
 
+import java.io.Closeable;
+
 import cn.yezhss.seetaface.cxx.QualityOfPoseNative;
 import cn.yezhss.seetaface.po.QualityResult;
 import cn.yezhss.seetaface.po.SeetaImageData;
 import cn.yezhss.seetaface.po.SeetaPointF;
 import cn.yezhss.seetaface.po.SeetaRect;
+import cn.yezhss.seetaface.util.SeetaAssert;
 
 /**
  * 非深度学习的人脸姿态评估器
  * @author Onion_Ye
  * @time 2020年7月9日 上午10:23:41
  */
-public class QualityOfPose {
+public class QualityOfPose implements Closeable {
 	
 	private final long NATIVE_ID;
+	
+	private boolean isClose = false;
 
 	/**
 	 * 非深度学习的人脸姿态评估器
@@ -34,7 +39,20 @@ public class QualityOfPose {
 	 * @time 2020年7月9日 上午11:07:02
 	 */
 	public QualityResult check(SeetaImageData image, SeetaRect face, SeetaPointF[] points) {
+		SeetaAssert.validate(isClose, image, face, points);
 		return QualityOfPoseNative.check(NATIVE_ID, image, face, points);
+	}
+
+	/**
+	 * 
+	 * @param
+	 * @author Onion_Ye
+	 * @time 2020年7月20日 下午5:57:49
+	 */
+	public void close() {
+		SeetaAssert.validate(isClose);
+		QualityOfPoseNative.close(NATIVE_ID);
+		this.isClose = true;
 	}
 	
 }

@@ -7,6 +7,7 @@ import cn.yezhss.seetaface.po.PointWithMask;
 import cn.yezhss.seetaface.po.SeetaImageData;
 import cn.yezhss.seetaface.po.SeetaModelSetting;
 import cn.yezhss.seetaface.po.SeetaRect;
+import cn.yezhss.seetaface.util.SeetaAssert;
 
 /**
  * 人脸特征点检测器
@@ -15,7 +16,9 @@ import cn.yezhss.seetaface.po.SeetaRect;
  */
 public class FaceLandmarker implements Closeable {
 
-	private final long NATIVE_ID;
+	private Long NATIVE_ID;
+	
+	private boolean isClose = false;
 	
 	/**
 	 * 人脸特征点检测器
@@ -34,6 +37,9 @@ public class FaceLandmarker implements Closeable {
 	 * @time 2020年6月22日 下午5:18:33
 	 */
 	public FaceLandmarker(SeetaModelSetting seetaModelSetting) {
+		if (seetaModelSetting == null) {
+			throw new NullPointerException("");
+		}
 		this.NATIVE_ID = FaceLandmarkerNative.init(seetaModelSetting);
 	}
 	
@@ -44,6 +50,7 @@ public class FaceLandmarker implements Closeable {
 	 * @time 2020年6月22日 下午1:28:26
 	 */
 	public int number() {
+		SeetaAssert.validate(isClose);
 		return FaceLandmarkerNative.number(NATIVE_ID);
 	}
 	
@@ -57,16 +64,19 @@ public class FaceLandmarker implements Closeable {
 	 * @time 2020年6月22日 下午1:31:11
 	 */
 	public PointWithMask[] mark(SeetaImageData image, SeetaRect face) {
+		SeetaAssert.validate(isClose, image, face);
 		return FaceLandmarkerNative.mark(NATIVE_ID, image, face);
 	}
 
 	/**
 	 * 释放资源
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年7月17日 下午5:01:11
 	 */
 	public void close() {
+		SeetaAssert.validate(isClose);
 		FaceLandmarkerNative.close(NATIVE_ID);
+		isClose = true;
 	}
 	
 }

@@ -142,5 +142,12 @@ public class FaceAntiSpoofingNative {
 	 * @time 2020年6月24日 下午6:26:06
 	 */
 	public static native double get(long nativeId, int property);
+
+	/**
+	 * 释放资源
+	 * @author Onion_Ye
+	 * @time 2020年7月17日 下午6:22:09
+	 */
+	public static native void close(long nativeId);
 	
 }

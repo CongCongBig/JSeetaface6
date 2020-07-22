@@ -51,6 +51,9 @@ public class FaceLandmarkerTest extends SeetafaceTest {
 				System.out.printf("第%s个关键点 是否被遮挡: %s, x: %s, y: %s\n", ++n, mask.mask, mask.point.x, mask.point.y);
 			}
 		}
+		
+		marker.close();
+		detector.close();
 	}
 	
 }

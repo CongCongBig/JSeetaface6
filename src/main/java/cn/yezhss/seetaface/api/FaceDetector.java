@@ -1,13 +1,12 @@
 package cn.yezhss.seetaface.api;
 
+import java.io.Closeable;
+
+import cn.yezhss.seetaface.cxx.FaceDetectorNative;
 import cn.yezhss.seetaface.po.SeetaFaceInfoArray;
 import cn.yezhss.seetaface.po.SeetaImageData;
 import cn.yezhss.seetaface.po.SeetaModelSetting;
-
-import java.io.Closeable;
-import java.io.IOException;
-
-import cn.yezhss.seetaface.cxx.FaceDetectorNative;
+import cn.yezhss.seetaface.util.SeetaAssert;
 
 /**
  * 人脸检测器
@@ -16,7 +15,9 @@ import cn.yezhss.seetaface.cxx.FaceDetectorNative;
  */
 public class FaceDetector implements Closeable {
 
-	private final long NATIVE_ID;
+	private Long NATIVE_ID;
+	
+	private boolean isClose = false;
 	
 	/**
 	 * 人脸检测器
@@ -35,6 +36,9 @@ public class FaceDetector implements Closeable {
 	 * @time 2020年6月22日 下午1:22:22
 	 */
 	public FaceDetector(SeetaModelSetting setting) {
+		if (setting == null) {
+			throw new NullPointerException("配置不能为空.");
+		}
 		NATIVE_ID = FaceDetectorNative.init(setting);
 	}
 	
@@ -46,6 +50,7 @@ public class FaceDetector implements Closeable {
 	 * @time 2020年6月22日 下午1:19:32
 	 */
 	public SeetaFaceInfoArray detect(SeetaImageData image) {
+		SeetaAssert.validate(isClose, image);
 		return FaceDetectorNative.detect(NATIVE_ID, image);
 	}
 	
@@ -57,6 +62,7 @@ public class FaceDetector implements Closeable {
 	 * @time 2020年6月22日 下午1:07:14
 	 */
 	public void set(Property property, double value) {
+		SeetaAssert.validate(isClose, property);
 		FaceDetectorNative.set(NATIVE_ID, property.getValue(), value);
 	}
 	
@@ -68,16 +74,19 @@ public class FaceDetector implements Closeable {
 	 * @time 2020年6月22日 下午1:10:52
 	 */
 	public double get(Property property) {
+		SeetaAssert.validate(isClose, property);
 		return FaceDetectorNative.get(NATIVE_ID, property.getValue());
 	}
 	
 	/**
 	 * 释放资源
-	 * @author YeZhiCong
-	 * @time 2020年7月17日 下午5:01:47
+	 * @author Onion_Ye
+	 * @time 2020年7月21日 上午9:36:58
 	 */
 	public void close() {
+		SeetaAssert.validate(isClose);
 		FaceDetectorNative.close(NATIVE_ID);
+		isClose = true;
 	}
 	
 	/**

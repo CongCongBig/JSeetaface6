@@ -1,18 +1,23 @@
 package cn.yezhss.seetaface.api;
 
+import java.io.Closeable;
+
 import cn.yezhss.seetaface.cxx.GenderPredictorNative;
 import cn.yezhss.seetaface.po.SeetaImageData;
 import cn.yezhss.seetaface.po.SeetaModelSetting;
 import cn.yezhss.seetaface.po.SeetaPointF;
+import cn.yezhss.seetaface.util.SeetaAssert;
 
 /**
  * 性别估计器
  * @author Onion_Ye
  * @time 2020年6月22日 下午5:20:29
  */
-public class GenderPredictor {
+public class GenderPredictor implements Closeable {
 
 	private final long NATIVE_ID;
+	
+	private boolean isClose = false;
 
 	/**
 	 * 性别估计器
@@ -41,7 +46,8 @@ public class GenderPredictor {
 	 * @author Onion_Ye
 	 * @time 2020年6月22日 下午5:45:59
 	 */
-	public SeetaImageData cropFace(long nativeId, SeetaImageData image, SeetaPointF[] points) {
+	public SeetaImageData cropFace(SeetaImageData image, SeetaPointF[] points) {
+		SeetaAssert.validate(isClose, image, points);
 		return GenderPredictorNative.cropFace(NATIVE_ID, image, points);
 	}
 
@@ -53,7 +59,8 @@ public class GenderPredictor {
 	 * @author Onion_Ye
 	 * @time 2020年6月22日 下午5:42:46
 	 */
-	public Gender predictGender(long nativeId, SeetaImageData face) {
+	public Gender predictGender(SeetaImageData face) {
+		SeetaAssert.validate(isClose, face);
 		int result = GenderPredictorNative.predictGender(NATIVE_ID, face);
 		return toGender(result);
 	}
@@ -85,6 +92,7 @@ public class GenderPredictor {
 	 * @time 2020年6月22日 下午5:35:48
 	 */
 	public Gender predictGenderWithCrop(SeetaImageData image, SeetaPointF[] points) {
+		SeetaAssert.validate(isClose, image, points);
 		int result = GenderPredictorNative.predictGenderWithCrop(NATIVE_ID, image, points);
 		return toGender(result);
 	}
@@ -97,6 +105,7 @@ public class GenderPredictor {
 	 * @time 2020年6月22日 下午5:30:19
 	 */
 	public void set(Property property, double value) {
+		SeetaAssert.validate(isClose, property);
 		GenderPredictorNative.set(NATIVE_ID, property.getValue(), value);
 	}
 
@@ -108,7 +117,19 @@ public class GenderPredictor {
 	 * @time 2020年6月22日 下午5:30:19
 	 */
 	public double get(Property property) {
+		SeetaAssert.validate(isClose, property);
 		return GenderPredictorNative.get(NATIVE_ID, property.getValue());
+	}
+	
+	/**
+	 * 释放资源
+	 * @author Onion_Ye
+	 * @time 2020年7月21日 上午9:48:20
+	 */
+	public void close() {
+		SeetaAssert.validate(isClose);
+		GenderPredictorNative.close(NATIVE_ID);
+		isClose = true;
 	}
 
 	/**

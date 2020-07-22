@@ -43,5 +43,13 @@ public class QualityOfBrightnessNative {
 	 * @time 2020年7月6日 上午11:41:53
 	 */
 	public static native QualityResult check(long nativeId, SeetaImageData image, SeetaRect face, SeetaPointF[] points);
+
+	/**
+	 * 释放资源
+	 * @param nativeId QualityOfBrightness在C++的序列化
+	 * @author Onion_Ye
+	 * @time 2020年7月20日 下午6:04:10
+	 */
+	public static native void close(long nativeId);
 	
 }
