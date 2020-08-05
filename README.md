@@ -1,5 +1,9 @@
 # JSeetaface6
 
+#### 更新说明
+2020.08.05
+1. 在resource下增加cpp文件夹，存放C++代码。
+
 #### 介绍
 1. 基于中科院seetaface6进行封装的JAVA人脸识别算法库。
 2. 该封装仅做了java到seetaface6(c++)的连接(jni)，可以让java通过resource下x64/JSeetaface6.dll直接使用seetaface6动态库。
