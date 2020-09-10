@@ -1,5 +1,7 @@
 package cn.yezhss.seetaface.demo;
 
+import java.util.Arrays;
+
 import cn.yezhss.seetaface.api.FaceDetector;
 import cn.yezhss.seetaface.api.FaceLandmarker;
 import cn.yezhss.seetaface.api.FaceRecognizer;
@@ -18,7 +20,7 @@ import cn.yezhss.seetaface.util.SeetafaceUtil;
  * 关注公众号: 时匆
  * 给个小小的支持
  * </pre>
- * @author YeZhiCong
+ * @author Onion_Ye
  * @time 2020年7月15日 上午11:58:14
  */
 public class FaceRecognizerTest extends SeetafaceTest {
@@ -47,7 +49,7 @@ public class FaceRecognizerTest extends SeetafaceTest {
 	
 	/**
 	 * 获取特征数组
-	 * @author YeZhiCong
+	 * @author Onion_Ye
 	 * @time 2020年7月15日 下午12:10:56
 	 */
 	private static float[] extract(String fileName) {
