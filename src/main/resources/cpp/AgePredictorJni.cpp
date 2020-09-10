@@ -42,14 +42,12 @@ JNIEXPORT jint JNICALL Java_cn_yezhss_seetaface_cxx_AgePredictorNative_predictAg
 {
 	seeta::AgePredictor* age = (seeta::AgePredictor*) nativeId;
 	SeetaImageData faceData = toSeetaImageData(env, face);
-	int* ageNum = new int();
-	bool isSuccess = age->PredictAge(faceData, *ageNum);
-	int result = -1;
-	if (isSuccess) {
-		result = *ageNum;
+	int ageNum;
+	bool isSuccess = age->PredictAge(faceData, ageNum);
+	if (!isSuccess) {
+		ageNum = -1;
 	}
-	delete ageNum;
-	return result;
+	return ageNum;
 }
 
 /*
@@ -63,14 +61,12 @@ JNIEXPORT jint JNICALL Java_cn_yezhss_seetaface_cxx_AgePredictorNative_predictAg
 	seeta::AgePredictor* age = (seeta::AgePredictor*) nativeId;
 	SeetaImageData imageData = toSeetaImageData(env, image);
 	SeetaPointF* pointFs = toPoints(env, points);
-	int* ageNum = new int();
-	bool isSuccess = age->PredictAgeWithCrop(imageData, pointFs, *ageNum);
-	int result = -1;
-	if (isSuccess) {
-		result = *ageNum;
+	int ageNum;
+	bool isSuccess = age->PredictAgeWithCrop(imageData, pointFs, ageNum);
+	if (!isSuccess) {
+		ageNum = -1;
 	}
-	delete ageNum;
-	return result;
+	return ageNum;
 }
 
 /*

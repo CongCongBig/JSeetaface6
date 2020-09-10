@@ -1,6 +1,10 @@
 # JSeetaface6
 
 #### 更新说明
+2020.09.10
+1. 对JNI与C++的重新认识，针对常用的模块对内存进一步优化。
+2. Java中SeetaImageData转换C++中SeetaImageData从数组拷贝改为强转以加快操作速度。
+
 2020.08.05
 1. 在resource下增加cpp文件夹，存放不忍直视的jni代码。
 

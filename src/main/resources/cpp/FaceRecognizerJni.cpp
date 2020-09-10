@@ -44,19 +44,15 @@ JNIEXPORT jfloatArray JNICALL Java_cn_yezhss_seetaface_cxx_FaceRecognizerNative_
 	float* features = new float[size];
 	SeetaImageData imageData = toSeetaImageData(env, image);
 	bool isSuccess = recognizer->ExtractCroppedFace(imageData, features);
+	jfloatArray featuresJava = NULL;
 	if (isSuccess) 
 	{
 		int size = recognizer->GetExtractFeatureSize();
-		jfloatArray featuresJava = env->NewFloatArray(size);
+		featuresJava = env->NewFloatArray(size);
 		env->SetFloatArrayRegion(featuresJava, 0, size, features);
-		delete features;
-		return featuresJava;
 	}
-	else
-	{
-		delete features;
-		return NULL;
-	}
+	delete[] features;
+	return featuresJava;
 }
 
 /*
@@ -73,18 +69,15 @@ JNIEXPORT jfloatArray JNICALL Java_cn_yezhss_seetaface_cxx_FaceRecognizerNative_
 	SeetaImageData imageData = toSeetaImageData(env, image);
 	SeetaPointF* pointFs = toPoints(env, points);
 	bool isSuccess = recognizer->Extract(imageData, pointFs, features);
+	jfloatArray featuresJava = NULL;
 	if (isSuccess)
 	{
-		jfloatArray featuresJava = env->NewFloatArray(size);
+		featuresJava = env->NewFloatArray(size);
 		env->SetFloatArrayRegion(featuresJava, 0, size, features);
-		delete features, pointFs;
-		return featuresJava;
 	}
-	else
-	{
-		delete features, pointFs;
-		return NULL;
-	}
+	delete[] features;
+	delete pointFs;
+	return featuresJava;
 }
 
 /*
@@ -98,7 +91,10 @@ JNIEXPORT jfloat JNICALL Java_cn_yezhss_seetaface_cxx_FaceRecognizerNative_calcu
 	seeta::FaceRecognizer* recognizer = (seeta::FaceRecognizer*) nativeId;
 	jfloat* features1 = env->GetFloatArrayElements(featuresOne, 0);
 	jfloat* features2 = env->GetFloatArrayElements(featuresTwo, 0);
-	return recognizer->CalculateSimilarity(features1, features2);
+	jfloat result = recognizer->CalculateSimilarity(features1, features2);
+	env->DeleteLocalRef(featuresOne);
+	env->DeleteLocalRef(featuresTwo);
+	return result;
 }
 
 /*

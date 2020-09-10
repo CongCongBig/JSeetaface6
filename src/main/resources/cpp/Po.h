@@ -27,19 +27,8 @@ static seeta::ModelSetting toSetting(JNIEnv *env, jobject setting) {
 			modelSetting.device = SeetaDevice::SEETA_DEVICE_AUTO;
 		}
 	}
+	env->DeleteLocalRef(setting);
 	return modelSetting;
-}
-
-static unsigned char* jByteaArray2Chars(JNIEnv* env, jbyteArray bytearray)
-{
-	jbyte* bytes = env->GetByteArrayElements(bytearray, JNI_FALSE);
-	int chars_len = env->GetArrayLength(bytearray);
-	unsigned char* chars = new unsigned char[chars_len + 1];
-	memset(chars, 0, chars_len + 1);
-	memcpy(chars, bytes, chars_len);
-	chars[chars_len] = 0;
-	env->ReleaseByteArrayElements(bytearray, bytes, 0);
-	return chars;
 }
 
 /*
@@ -49,18 +38,19 @@ static unsigned char* jByteaArray2Chars(JNIEnv* env, jbyteArray bytearray)
 */
 static SeetaImageData toSeetaImageData(JNIEnv* env, jobject seetaImageData)
 {
-	SeetaImageData* sid = new SeetaImageData();
+	SeetaImageData result;
 	jclass imageClazz = getClass(env, seetaImageData);
-	sid->width = getInt(env, seetaImageData, imageClazz, "width");
-	sid->height = getInt(env, seetaImageData, imageClazz, "height");
-	sid->channels = getInt(env, seetaImageData, imageClazz, "channels");
-
+	result.width = getInt(env, seetaImageData, imageClazz, "width");
+	result.height = getInt(env, seetaImageData, imageClazz, "height");
+	result.channels = getInt(env, seetaImageData, imageClazz, "channels");
+	
 	jfieldID id_data = env->GetFieldID(imageClazz, "data", "[B");
-	jobject data = env->GetObjectField(seetaImageData, id_data);
-	jbyteArray dataArray = (jbyteArray)data;
-	sid->data = jByteaArray2Chars(env, dataArray);
-	SeetaImageData result = *sid;
-	delete sid;
+	jbyteArray dataArray = (jbyteArray)env->GetObjectField(seetaImageData, id_data);
+	result.data = (unsigned char*)env->GetByteArrayElements(dataArray, 0);
+	
+	env->DeleteLocalRef(dataArray);
+	env->DeleteLocalRef(seetaImageData);
+
 	return result;
 }
 
@@ -77,14 +67,14 @@ static jobject toSeetaImageData(JNIEnv* env, SeetaImageData seetaImageData)
 	setInt(env, image, imageClazz, "height", seetaImageData.height);
 	setInt(env, image, imageClazz, "channels", seetaImageData.channels);
 
-	jfieldID data_data = env->GetFieldID(imageClazz, "data", "[B");
 	int count = seetaImageData.width * seetaImageData.height * seetaImageData.channels;
 	jbyteArray byteArray = env->NewByteArray(count);
-	jbyte* bytes = new jbyte();
-	memcpy(seetaImageData.data, bytes, count);
-	env->SetByteArrayRegion(byteArray, 0, count, bytes);
-	delete bytes;
+	
+	env->SetByteArrayRegion(byteArray, 0, count, (jbyte *)seetaImageData.data);
+
+	jfieldID data_data = env->GetFieldID(imageClazz, "data", "[B");
 	env->SetObjectField(image, data_data, byteArray);
+
 	return image;
 }
 
@@ -126,16 +116,17 @@ static jobject toSeetaFaceInfoArray(JNIEnv *env, SeetaFaceInfoArray seetaFaceInf
 }
 
 static SeetaRect toRect(JNIEnv* env, jobject rect) {
-	SeetaRect* seetaRect = new SeetaRect();
+	SeetaRect seetaRect;
 	jclass rectClazz = getClass(env, rect);
 	
-	seetaRect->x = getInt(env, rect, rectClazz, "x");
-	seetaRect->y = getInt(env, rect, rectClazz, "y");
-	seetaRect->width = getInt(env, rect, rectClazz, "width");
-	seetaRect->height = getInt(env, rect, rectClazz, "height");
-	SeetaRect resutl = *seetaRect;
-	delete seetaRect;
-	return resutl;
+	seetaRect.x = getInt(env, rect, rectClazz, "x");
+	seetaRect.y = getInt(env, rect, rectClazz, "y");
+	seetaRect.width = getInt(env, rect, rectClazz, "width");
+	seetaRect.height = getInt(env, rect, rectClazz, "height");
+
+	env->DeleteLocalRef(rect);
+
+	return seetaRect;
 }
 
 static SeetaPointF* toPoints(JNIEnv* env, jobjectArray arr) {
@@ -148,6 +139,8 @@ static SeetaPointF* toPoints(JNIEnv* env, jobjectArray arr) {
 		jfieldID yField = env->GetFieldID(seetaPointFObject, "y", "D");
 		points[i].x = env->GetDoubleField(seetaPointF, xField);
 		points[i].y = env->GetDoubleField(seetaPointF, yField);
+		env->DeleteLocalRef(seetaPointF);
 	}
+	env->DeleteLocalRef(arr);
 	return points;
 }
