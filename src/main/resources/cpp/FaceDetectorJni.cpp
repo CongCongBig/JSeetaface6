@@ -24,8 +24,19 @@ JNIEXPORT jobject JNICALL Java_cn_yezhss_seetaface_cxx_FaceDetectorNative_detect
 (JNIEnv* env, jclass, jlong nativeId, jobject image)
 {
 	seeta::FaceDetector* facedector = (seeta::FaceDetector*)nativeId;
-	SeetaFaceInfoArray infos = facedector->detect(toSeetaImageData(env, image));
-	return toSeetaFaceInfoArray(env, infos);
+	SeetaImageData imageData = toSeetaImageData(env, image);
+
+	jbyteArray dataArray = getSeetaImageDataByteArray(env, image);
+	jbyte* array = env->GetByteArrayElements(dataArray, 0);
+	imageData.data = (unsigned char*)array;
+
+	SeetaFaceInfoArray infos = facedector->detect(imageData);
+	jobject result = toSeetaFaceInfoArray(env, infos);
+
+	env->ReleaseByteArrayElements(dataArray, array, 0);
+	env->DeleteLocalRef(image);
+
+	return result;
 }
 
 /*

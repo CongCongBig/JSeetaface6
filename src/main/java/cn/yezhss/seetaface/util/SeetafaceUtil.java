@@ -203,13 +203,17 @@ public class SeetafaceUtil {
 		return target;
 	}  
 	
-	public static void writeRect(BufferedImage image, SeetaRect rect) {
-		Graphics gra = image.getGraphics();
+	public static BufferedImage writeRect(BufferedImage image, SeetaRect rect) {
+		BufferedImage bi = new BufferedImage(image.getWidth(), image.getHeight(), image.getType());
+		Graphics gra = bi.getGraphics();
+		gra.drawImage(image, 0, 0, null);
 		gra.setColor(Color.RED);
 		gra.drawRect(rect.x, rect.y, rect.width, rect.height);
+		gra.dispose();
+		return bi;
 	}
 	
-	public static void show(String title, BufferedImage image) {
+	public static JFrame show(String title, BufferedImage image) {
 		JFrame frame = new JFrame();
 		frame.setTitle(title);
 		frame.setSize(image.getWidth(), image.getHeight());
@@ -219,6 +223,7 @@ public class SeetafaceUtil {
 		frame.setVisible(true);
 		ImageIcon icon = new ImageIcon(image);
 		label.setIcon(icon);
+		return frame;
 	}
 
 }

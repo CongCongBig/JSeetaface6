@@ -30,10 +30,19 @@ JNIEXPORT jint JNICALL Java_cn_yezhss_seetaface_cxx_FaceAntiSpoofingNative_predi
 {
 	seeta::FaceAntiSpoofing* spoofing = (seeta::FaceAntiSpoofing*) nativeId;
 	SeetaImageData imageData = toSeetaImageData(env, image);
+
+	jbyteArray dataArray = getSeetaImageDataByteArray(env, image);
+	jbyte* array = env->GetByteArrayElements(dataArray, 0);
+	imageData.data = (unsigned char*)array;
+
 	SeetaRect face = toRect(env, rect);
 	SeetaPointF* pointFs = toPoints(env, points);
 	int result = (int)spoofing->Predict(imageData, face, pointFs);
+
 	delete pointFs;
+	env->ReleaseByteArrayElements(dataArray, array, 0);
+	env->DeleteLocalRef(image);
+
 	return result;
 }
 
@@ -46,11 +55,20 @@ JNIEXPORT jint JNICALL Java_cn_yezhss_seetaface_cxx_FaceAntiSpoofingNative_predi
 (JNIEnv* env, jclass, jlong nativeId, jobject image, jobject rect, jobjectArray points)
 {
 	seeta::FaceAntiSpoofing* spoofing = (seeta::FaceAntiSpoofing*) nativeId;
+
 	SeetaImageData imageData = toSeetaImageData(env, image);
+	jbyteArray dataArray = getSeetaImageDataByteArray(env, image);
+	jbyte* array = env->GetByteArrayElements(dataArray, 0);
+	imageData.data = (unsigned char*)array;
+
 	SeetaRect face = toRect(env, rect);
 	SeetaPointF* pointFs = toPoints(env, points);
 	int result = (int)spoofing->PredictVideo(imageData, face, pointFs);
+
 	delete pointFs;
+	env->ReleaseByteArrayElements(dataArray, array, 0);
+	env->DeleteLocalRef(image);
+
 	return result;
 }
 

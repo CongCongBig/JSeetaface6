@@ -25,10 +25,19 @@ JNIEXPORT jobject JNICALL Java_cn_yezhss_seetaface_cxx_AgePredictorNative_cropFa
 {
 	seeta::AgePredictor* age = (seeta::AgePredictor*) nativeId;
 	SeetaImageData image = toSeetaImageData(env, imageData);
+
+	jbyteArray dataArray = getSeetaImageDataByteArray(env, imageData);
+	jbyte* array = env->GetByteArrayElements(dataArray, 0);
+	image.data = (unsigned char*)array;
+	
 	SeetaImageData face;
 	SeetaPointF* points = toPoints(env, seetaPointFs);
 	bool isCrop = age->CropFace(image, points, face);
+
 	delete points;
+	env->ReleaseByteArrayElements(dataArray, array, 0);
+	env->DeleteLocalRef(imageData);
+
 	return isCrop ? toSeetaImageData(env, face) : NULL;
 }
 
@@ -42,11 +51,20 @@ JNIEXPORT jint JNICALL Java_cn_yezhss_seetaface_cxx_AgePredictorNative_predictAg
 {
 	seeta::AgePredictor* age = (seeta::AgePredictor*) nativeId;
 	SeetaImageData faceData = toSeetaImageData(env, face);
+
+	jbyteArray dataArray = getSeetaImageDataByteArray(env, face);
+	jbyte* array = env->GetByteArrayElements(dataArray, 0);
+	faceData.data = (unsigned char*)array;
+
 	int ageNum;
 	bool isSuccess = age->PredictAge(faceData, ageNum);
 	if (!isSuccess) {
 		ageNum = -1;
 	}
+
+	env->ReleaseByteArrayElements(dataArray, array, 0);
+	env->DeleteLocalRef(face);
+
 	return ageNum;
 }
 
@@ -60,12 +78,21 @@ JNIEXPORT jint JNICALL Java_cn_yezhss_seetaface_cxx_AgePredictorNative_predictAg
 {
 	seeta::AgePredictor* age = (seeta::AgePredictor*) nativeId;
 	SeetaImageData imageData = toSeetaImageData(env, image);
+
+	jbyteArray dataArray = getSeetaImageDataByteArray(env, image);
+	jbyte* array = env->GetByteArrayElements(dataArray, 0);
+	imageData.data = (unsigned char*)array;
+
 	SeetaPointF* pointFs = toPoints(env, points);
 	int ageNum;
 	bool isSuccess = age->PredictAgeWithCrop(imageData, pointFs, ageNum);
 	if (!isSuccess) {
 		ageNum = -1;
 	}
+
+	env->ReleaseByteArrayElements(dataArray, array, 0);
+	env->DeleteLocalRef(image);
+
 	return ageNum;
 }
 

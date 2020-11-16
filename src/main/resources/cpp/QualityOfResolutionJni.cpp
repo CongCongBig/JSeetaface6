@@ -46,10 +46,15 @@ JNIEXPORT jobject JNICALL Java_cn_yezhss_seetaface_cxx_QualityOfResolutionNative
 	seeta::QualityOfResolution* quality = (seeta::QualityOfResolution*)nativeId;
 	int n = env->GetArrayLength(points);
 	SeetaImageData imageData = toSeetaImageData(env, image);
+	jbyteArray dataArray = getSeetaImageDataByteArray(env, image);
+	jbyte* array = env->GetByteArrayElements(dataArray, 0);
+	imageData.data = (unsigned char*)array;
 	SeetaRect face = toRect(env, rect);
 	SeetaPointF* pointFs = toPoints(env, points);
 	seeta::QualityResult result = quality->check(imageData, face, pointFs, n);
 	delete pointFs;
+	env->ReleaseByteArrayElements(dataArray, array, 0);
+	env->DeleteLocalRef(image);
 	return toQualityResult(env, result);
 }
 

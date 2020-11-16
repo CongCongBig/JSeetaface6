@@ -25,16 +25,26 @@ JNIEXPORT jobject JNICALL Java_cn_yezhss_seetaface_cxx_EyeStateDetectorNative_de
 {
 	seeta::EyeStateDetector* detector = (seeta::EyeStateDetector*) nativeId;
 	SeetaImageData imageData = toSeetaImageData(env, image);
+
+	jbyteArray dataArray = getSeetaImageDataByteArray(env, image);
+	jbyte* array = env->GetByteArrayElements(dataArray, 0);
+	imageData.data = (unsigned char*)array;
+
 	SeetaPointF* pointFs = toPoints(env, points);
 	seeta::EyeStateDetector::EYE_STATE leftstate;
 	seeta::EyeStateDetector::EYE_STATE rightstate;
 	detector->Detect(imageData, pointFs, leftstate, rightstate);
+
 	delete pointFs;
 
 	jclass eyeStateClazz = getClass(env, "cn/yezhss/seetaface/po/EyeState");
 	jobject eyeState = newObject(env, eyeStateClazz);
 	setInt(env, eyeState, eyeStateClazz, "left", leftstate);
 	setInt(env, eyeState, eyeStateClazz, "right", rightstate);
+
+	env->ReleaseByteArrayElements(dataArray, array, 0);
+	env->DeleteLocalRef(image);
+
 	return eyeState;
 }
 

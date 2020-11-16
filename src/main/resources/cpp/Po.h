@@ -43,15 +43,19 @@ static SeetaImageData toSeetaImageData(JNIEnv* env, jobject seetaImageData)
 	result.width = getInt(env, seetaImageData, imageClazz, "width");
 	result.height = getInt(env, seetaImageData, imageClazz, "height");
 	result.channels = getInt(env, seetaImageData, imageClazz, "channels");
-	
-	jfieldID id_data = env->GetFieldID(imageClazz, "data", "[B");
-	jbyteArray dataArray = (jbyteArray)env->GetObjectField(seetaImageData, id_data);
-	result.data = (unsigned char*)env->GetByteArrayElements(dataArray, 0);
-	
-	env->DeleteLocalRef(dataArray);
-	env->DeleteLocalRef(seetaImageData);
+
+	/*jbyte* array = env->GetByteArrayElements(dataArray, 0);
+	result.data = (unsigned char*)array;
+	env->ReleaseByteArrayElements(dataArray, array, 0);
+	env->DeleteLocalRef(seetaImageData);*/
 
 	return result;
+}
+
+static jbyteArray getSeetaImageDataByteArray(JNIEnv* env, jobject seetaImageData) {
+	jclass imageClazz = getClass(env, seetaImageData);
+	jfieldID id_data = env->GetFieldID(imageClazz, "data", "[B");
+	return (jbyteArray)env->GetObjectField(seetaImageData, id_data);
 }
 
 /*

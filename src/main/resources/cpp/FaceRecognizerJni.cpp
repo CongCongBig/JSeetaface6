@@ -25,9 +25,15 @@ JNIEXPORT jobject JNICALL Java_cn_yezhss_seetaface_cxx_FaceRecognizerNative_crop
 {
 	seeta::FaceRecognizer* recognizer = (seeta::FaceRecognizer*) nativeId;
 	SeetaImageData imageData = toSeetaImageData(env, image);
+	jbyteArray dataArray = getSeetaImageDataByteArray(env, image);
+	jbyte* array = env->GetByteArrayElements(dataArray, 0);
+	imageData.data = (unsigned char*)array;
+
 	SeetaPointF* pointFs = toPoints(env, points);
 	SeetaImageData face = recognizer->CropFace(imageData, pointFs);
 	delete pointFs;
+	env->ReleaseByteArrayElements(dataArray, array, 0);
+	env->DeleteLocalRef(image);
 	return toSeetaImageData(env, face);
 }
 
@@ -43,6 +49,10 @@ JNIEXPORT jfloatArray JNICALL Java_cn_yezhss_seetaface_cxx_FaceRecognizerNative_
 	int size = recognizer->GetExtractFeatureSize();
 	float* features = new float[size];
 	SeetaImageData imageData = toSeetaImageData(env, image);
+	jbyteArray dataArray = getSeetaImageDataByteArray(env, image);
+	jbyte* array = env->GetByteArrayElements(dataArray, 0);
+	imageData.data = (unsigned char*)array;
+
 	bool isSuccess = recognizer->ExtractCroppedFace(imageData, features);
 	jfloatArray featuresJava = NULL;
 	if (isSuccess) 
@@ -52,6 +62,8 @@ JNIEXPORT jfloatArray JNICALL Java_cn_yezhss_seetaface_cxx_FaceRecognizerNative_
 		env->SetFloatArrayRegion(featuresJava, 0, size, features);
 	}
 	delete[] features;
+	env->ReleaseByteArrayElements(dataArray, array, 0);
+	env->DeleteLocalRef(image);
 	return featuresJava;
 }
 
@@ -67,6 +79,10 @@ JNIEXPORT jfloatArray JNICALL Java_cn_yezhss_seetaface_cxx_FaceRecognizerNative_
 	int size = recognizer->GetExtractFeatureSize();
 	float* features = new float[size];
 	SeetaImageData imageData = toSeetaImageData(env, image);
+	jbyteArray dataArray = getSeetaImageDataByteArray(env, image);
+	jbyte* array = env->GetByteArrayElements(dataArray, 0);
+	imageData.data = (unsigned char*)array;
+
 	SeetaPointF* pointFs = toPoints(env, points);
 	bool isSuccess = recognizer->Extract(imageData, pointFs, features);
 	jfloatArray featuresJava = NULL;
@@ -75,8 +91,9 @@ JNIEXPORT jfloatArray JNICALL Java_cn_yezhss_seetaface_cxx_FaceRecognizerNative_
 		featuresJava = env->NewFloatArray(size);
 		env->SetFloatArrayRegion(featuresJava, 0, size, features);
 	}
-	delete[] features;
-	delete pointFs;
+	delete[] features, pointFs;
+	env->ReleaseByteArrayElements(dataArray, array, 0);
+	env->DeleteLocalRef(image);
 	return featuresJava;
 }
 
@@ -92,8 +109,15 @@ JNIEXPORT jfloat JNICALL Java_cn_yezhss_seetaface_cxx_FaceRecognizerNative_calcu
 	jfloat* features1 = env->GetFloatArrayElements(featuresOne, 0);
 	jfloat* features2 = env->GetFloatArrayElements(featuresTwo, 0);
 	jfloat result = recognizer->CalculateSimilarity(features1, features2);
-	env->DeleteLocalRef(featuresOne);
-	env->DeleteLocalRef(featuresTwo);
+
+	// @update 2020年11月16日 from gitee li_yanhui 更改原先会导致内存泄漏的问题
+
+	env->ReleaseFloatArrayElements(featuresOne, features1, JNI_COMMIT);
+	env->ReleaseFloatArrayElements(featuresTwo, features2, JNI_COMMIT);
+
+	// env->DeleteLocalRef(featuresOne);
+	// env->DeleteLocalRef(featuresTwo);
+	
 	return result;
 }
 

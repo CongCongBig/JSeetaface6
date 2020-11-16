@@ -37,6 +37,10 @@ JNIEXPORT jobject JNICALL Java_cn_yezhss_seetaface_cxx_FaceTrackerNative_track
 {
 	seeta::FaceTracker* tracker = (seeta::FaceTracker*) nativeId;
 	SeetaImageData imageData = toSeetaImageData(env, image);
+	jbyteArray dArray = getSeetaImageDataByteArray(env, image);
+	jbyte* array = env->GetByteArrayElements(dArray, 0);
+	imageData.data = (unsigned char*)array;
+
 	SeetaTrackingFaceInfoArray infos = tracker->Track(imageData, frameNo);
 	jclass datasClazz = getClass(env, "cn.yezhss.seetaface.po.SeetaTrackingFaceInfoArray");
 	jobject datas = newObject(env, datasClazz);
@@ -65,6 +69,9 @@ JNIEXPORT jobject JNICALL Java_cn_yezhss_seetaface_cxx_FaceTrackerNative_track
 	}
 	jfieldID dataField = env->GetFieldID(datasClazz, "data", "[Lcn/yezhss/seetaface/po/SeetaTrackingFaceInfo;");
 	env->SetObjectField(datas, dataField, dataArray);
+
+	env->ReleaseByteArrayElements(dArray, array, 0);
+	env->DeleteLocalRef(image);
 
 	return datas;
 }

@@ -17,7 +17,7 @@ public class SeetafaceTest {
 	 * 4. 下载完成后解压 将下面地址指向 %解压的路径%/sf6.0_windows/lib/x64
 	 * </pre>
 	 */
-	public static final String DLL_PATH = "E:/workspace/github/SeetaFace6/sf6.0_windows/lib/x64/";
+	public static final String DLL_PATH = "D:/sf6.0_windows/lib/x64";
 	
 	/**
 	 * CSTA基础路径
@@ -28,12 +28,12 @@ public class SeetafaceTest {
 	 * 4. 下载完成后解压 将下面地址指向 %解压的路径%/sf3.0_models
 	 * </pre>
 	 */
-	public static final String CSTA_PATH = "E:/workspace/github/SeetaFace6/sf3.0_models";
+	public static final String CSTA_PATH = "D:/sf3.0_models";
 	
 	/**
 	 * 测试的图片(更换到你自己的图片路径)
 	 */
-	public static final String TEST_PICT = "D:/1.jpg";
+	public static final String TEST_PICT = "D:/test/3.jpg";
 	
 	
 	static {

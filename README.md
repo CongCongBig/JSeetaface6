@@ -1,6 +1,13 @@
 # JSeetaface6
 
 #### 更新说明
+
+2020.11.16
+1. 对JNI与C++再次重新认识，对全部模块内存进一步优化，在此感谢gitee用户li_yanhui提点。
+2. 在介绍处增加gitee和github的传送门，本人相对于github更经常活跃在gitee上，当然有时候gitee也找不到人，深感抱歉。
+3. SeetafaceUtil.writeRect方法不再在原图上画框框，而是创建一个BufferedImage再画上框框。
+4. SeetafaceUtil.show方法将窗口对象返回给调用者方便操作。
+
 2020.09.10
 1. 对JNI与C++的重新认识，针对常用的模块对内存进一步优化。
 2. Java中SeetaImageData转换C++中SeetaImageData从数组拷贝改为强转以加快操作速度。
@@ -17,8 +24,10 @@
 6. 该项目没有任何依赖。
 7. 在此提供[Seetaface6的传送门](https://github.com/seetafaceengine/SeetaFace6)。
 8. 在此提供[Seetaface6入门教程的传送门](http://leanote.com/blog/post/5e7d6cecab64412ae60016ef)。
-9. 在此处**强调，请认真查看入门教程**，如懒得看则记住一点，你所创建的各个模块都是线程不安全的，有些安全的你若认为麻烦就都认为不安全。
-10. **该项目部分接口本人暂时还未测试，仅供参考，建议在使用前自行做大量测试后投入使用。**
+9. 在此提供[JSeetaface6的Gitee传送门](https://gitee.com/onionYe/JSeetaface6)相对活跃。
+10. 在此提供[JSeetaface6的Github传送门](https://github.com/CongCongBig/JSeetaface6)。
+11. 在此处**强调，请认真查看入门教程**，如懒得看则记住一点，你所创建的各个模块都是线程不安全的，有些安全的你若认为麻烦就都认为不安全。
+12. **该项目部分接口本人暂时还未测试，仅供参考，建议在使用前自行做大量测试后投入使用。**
 
 
 #### 安装教程

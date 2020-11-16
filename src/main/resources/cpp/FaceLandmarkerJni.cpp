@@ -37,7 +37,15 @@ JNIEXPORT jobjectArray JNICALL Java_cn_yezhss_seetaface_cxx_FaceLandmarkerNative
 {
 	// 调用mark_v2
 	seeta::FaceLandmarker* landmarker = (seeta::FaceLandmarker*) nativeId;
-	vector<seeta::FaceLandmarker::PointWithMask> result = landmarker->mark_v2(toSeetaImageData(env, image), toRect(env, rect));
+
+	SeetaImageData imageData = toSeetaImageData(env, image);
+	jbyteArray dataArray = getSeetaImageDataByteArray(env, image);
+	jbyte* array = env->GetByteArrayElements(dataArray, 0);
+	imageData.data = (unsigned char*)array;
+
+	SeetaRect face = toRect(env, rect);
+	vector<seeta::FaceLandmarker::PointWithMask> result = landmarker->mark_v2(imageData, face);
+
 	// 封装结果
 	jclass maskClazz = getClass(env, "cn/yezhss/seetaface/po/PointWithMask");
 	jobjectArray masks = env->NewObjectArray(landmarker->number(), maskClazz, 0);
@@ -60,6 +68,9 @@ JNIEXPORT jobjectArray JNICALL Java_cn_yezhss_seetaface_cxx_FaceLandmarkerNative
 
 		env->SetObjectArrayElement(masks, i++, maskJni);
 	}
+	
+	env->ReleaseByteArrayElements(dataArray, array, 0);
+	env->DeleteLocalRef(image);
 
 	return masks;
 }

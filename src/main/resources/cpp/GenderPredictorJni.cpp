@@ -25,10 +25,18 @@ JNIEXPORT jobject JNICALL Java_cn_yezhss_seetaface_cxx_GenderPredictorNative_cro
 {
 	seeta::GenderPredictor* genderPredictor = (seeta::GenderPredictor*) nativeId;
 	SeetaImageData image = toSeetaImageData(env, imageData);
+	jbyteArray dataArray = getSeetaImageDataByteArray(env, imageData);
+	jbyte* array = env->GetByteArrayElements(dataArray, 0);
+	image.data = (unsigned char*)array;
+
 	SeetaImageData face;
 	SeetaPointF* points = toPoints(env, seetaPointFs);
 	bool isCrop = genderPredictor->CropFace(image, points, face);
+
 	delete points;
+	env->ReleaseByteArrayElements(dataArray, array, 0);
+	env->DeleteLocalRef(imageData);
+
 	return isCrop ? toSeetaImageData(env, face) : NULL;
 }
 
@@ -42,12 +50,20 @@ JNIEXPORT jint JNICALL Java_cn_yezhss_seetaface_cxx_GenderPredictorNative_predic
 {
 	seeta::GenderPredictor* genderPredictor = (seeta::GenderPredictor*) nativeId;
 	SeetaImageData image = toSeetaImageData(env, face);
+	jbyteArray dataArray = getSeetaImageDataByteArray(env, face);
+	jbyte* array = env->GetByteArrayElements(dataArray, 0);
+	image.data = (unsigned char*)array;
+
 	seeta::GenderPredictor::GENDER gender;
 	bool isSuccess = genderPredictor->PredictGender(image, gender);
 	int result = -1;
 	if (isSuccess) {
 		result = gender;
 	}
+
+	env->ReleaseByteArrayElements(dataArray, array, 0);
+	env->DeleteLocalRef(face);
+
 	return result;
 }
 
@@ -57,18 +73,24 @@ JNIEXPORT jint JNICALL Java_cn_yezhss_seetaface_cxx_GenderPredictorNative_predic
  * Signature: (JLcn/yezhss/seetaface/po/SeetaImageData;[Lcn/yezhss/seetaface/po/SeetaPointF;)I
  */
 JNIEXPORT jint JNICALL Java_cn_yezhss_seetaface_cxx_GenderPredictorNative_predictGenderWithCrop
-(JNIEnv* env, jclass, jlong nativeId, jobject imageData, jobjectArray points)
+(JNIEnv* env, jclass, jlong nativeId, jobject image, jobjectArray points)
 {
 	seeta::GenderPredictor* genderPredictor = (seeta::GenderPredictor*) nativeId;
-	SeetaImageData image = toSeetaImageData(env, imageData);
+	SeetaImageData imageData = toSeetaImageData(env, image);
+	jbyteArray dataArray = getSeetaImageDataByteArray(env, image);
+	jbyte* array = env->GetByteArrayElements(dataArray, 0);
+	imageData.data = (unsigned char*)array;
+
 	SeetaPointF* pointFs = toPoints(env, points);
 	seeta::GenderPredictor::GENDER gender;
-	bool isSuccess = genderPredictor->PredictGenderWithCrop(image, pointFs, gender);
+	bool isSuccess = genderPredictor->PredictGenderWithCrop(imageData, pointFs, gender);
 	int result = -1;
 	if (isSuccess) {
 		result = gender;
 	}
 	delete pointFs;
+	env->ReleaseByteArrayElements(dataArray, array, 0);
+	env->DeleteLocalRef(image);
 	return result;
 }
 

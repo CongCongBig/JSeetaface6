@@ -39,7 +39,7 @@ public class FaceDetectorTest extends SeetafaceTest {
 			System.out.printf("第%s张人脸置信分数: %s\n", i, info.score);
 			SeetaRect rect = info.pos;
 			System.out.printf("第%s张人脸 x: %s, y: %s, width: %s, height: %s\n", i++, rect.x, rect.y, rect.width, rect.height);
-			SeetafaceUtil.writeRect(image, rect);
+			image = SeetafaceUtil.writeRect(image, rect);
 		}
 		SeetafaceUtil.show("人脸检测", image);
 		

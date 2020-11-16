@@ -27,6 +27,10 @@ JNIEXPORT jobject JNICALL Java_cn_yezhss_seetaface_cxx_QualityOfLBNNative_detect
 
 	int* light = new int(), *blur = new int(), *noise = new int();
 	SeetaImageData imageData = toSeetaImageData(env, image);
+	jbyteArray dataArray = getSeetaImageDataByteArray(env, image);
+	jbyte* array = env->GetByteArrayElements(dataArray, 0);
+	imageData.data = (unsigned char*)array;
+
 	SeetaPointF* pointFs = toPoints(env, points);
 	quality->Detect(imageData, pointFs, light, blur, noise);
 	jclass blurInfoClazz = getClass(env, "cn.yezhss.seetaface.po.BlurInfo");
@@ -35,6 +39,8 @@ JNIEXPORT jobject JNICALL Java_cn_yezhss_seetaface_cxx_QualityOfLBNNative_detect
 	setInt(env, blurInfo, blurInfoClazz, "blur", *blur);
 	setInt(env, blurInfo, blurInfoClazz, "noise", *noise);
 	delete pointFs, light, blur, noise;
+	env->ReleaseByteArrayElements(dataArray, array, 0);
+	env->DeleteLocalRef(image);
 	return blurInfo;
 }
 
